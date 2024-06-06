@@ -1,14 +1,19 @@
 import Image from "next/image";
-import {Header, Footer} from "../components/navbar/page";
-import {LandingPage, Services} from "../components/main/page";
+import { Header, Footer } from "../components/navbar/page";
+import { LandingPage, Services, AboutUs } from "../components/main/page";
 
 export default function Home() {
   return (
     <>
-    <Header></Header>
-    <LandingPage></LandingPage>
-    <Services></Services>
-    <Footer></Footer>
+      <Header></Header>
+      <LandingPage></LandingPage>
+      <div className="bg-white">
+        <AboutUs></AboutUs>
+      </div>
+      <div className="py-10 bg-white  ">
+        <Services></Services>
+      </div>
+      <Footer></Footer>
     </>
   );
 }
