@@ -1,39 +1,51 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import productAPI from '../../services/productAPI';
+// src/app/products/page.tsx
+import { useEffect, useState } from "react";
+import { fetchProducts } from "../../utils/productAPI";
 
-const ProductList = () => {
-  const [products, setProducts] = useState<any[]>([]); // Inisialisasi dengan array kosong
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+}
+
+export default function ProductsPage() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const getProducts = async () => {
       try {
-        const data = await productAPI.getAllProducts();
-        console.log('Fetched Products:', data); // Log ini masih bisa dipertahankan untuk debugging
-        setProducts(data);
+        const productsData: Product[] = await fetchProducts();
+        if (Array.isArray(productsData)) {
+          setProducts(productsData);
+        } else {
+          throw new Error("Products data is not an array");
+        }
       } catch (error) {
-        console.error('Failed to fetch products:', error);
+        setError((error as Error).message);
       }
     };
 
-    fetchProducts();
+    getProducts();
   }, []);
 
   return (
     <div>
-      <h1>Product List</h1>
-      <ul>
-        {Array.isArray(products) && products.length > 0 ? (
-          products.map((product: any) => (
-            <li key={product.id}>{product.name}</li>
-          ))
-        ) : (
-          <li>No products found</li>
-        )}
-      </ul>
+      <h1>Products</h1>
+      {error ? (
+        <p>Error: {error}</p>
+      ) : (
+        <ul>
+          {products.map((product) => (
+            <li key={product.id}>
+              {product.name} - <img src={product.image}></img>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
-};
-
-export default ProductList;
+}
