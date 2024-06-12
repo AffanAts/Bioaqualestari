@@ -29,9 +29,9 @@ const AboutUs = () => {
             </div>
           </div>
           <div className="mt-12 md:mt-0">
-            <Image
-              src="https://images.unsplash.com/photo-1531973576160-7125cd663d86"
-              alt="About Us Image"
+            <Image width={200} height={200} 
+              src="../../public/next.svg"
+              alt="About Us Image" 
               className="object-cover rounded-lg shadow-md"
             />
           </div>

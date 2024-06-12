@@ -3,12 +3,11 @@
 // src/app/products/page.tsx
 import { useEffect, useState } from "react";
 import { fetchProducts } from "../../utils/productAPI";
-import Image from 'next/image';
+import Image from "next/image";
 
 interface Product {
   id: number;
   name: string;
-  price: number;
   image: string;
 }
 
@@ -42,7 +41,15 @@ export default function ProductsPage() {
         <ul>
           {products.map((product) => (
             <li key={product.id}>
-              {product.name} - <Image src={product.image} alt={product.name} width={200} height={200} />
+              {product.name} -{" "}
+              <div className="relative w-64 h-64"> {/* Atur ukuran dan posisi di sini */}
+                <Image
+                  fill
+                  src={product.image}
+                  alt={product.name}
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
             </li>
           ))}
         </ul>
