@@ -3,6 +3,7 @@
 // src/app/products/page.tsx
 import { useEffect, useState } from "react";
 import { fetchProducts } from "../../utils/productAPI";
+import Image from 'next/image';
 
 interface Product {
   id: number;
@@ -41,7 +42,7 @@ export default function ProductsPage() {
         <ul>
           {products.map((product) => (
             <li key={product.id}>
-              {product.name} - <img src={product.image}></img>
+              {product.name} - <Image src={product.image} alt={product.name} width={200} height={200} />
             </li>
           ))}
         </ul>

@@ -1,5 +1,6 @@
 import React from 'react';
 import {dataServices}  from './page';
+import Image from 'next/image';
 
 const Services: React.FC = () => {
   return (
@@ -13,7 +14,7 @@ const Services: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16 max-md:max-w-lg mx-auto">
           {dataServices.map(post => (
             <div key={post.id} className="bg-white cursor-pointer rounded overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] relative transition-all duration-300 group">
-              <img src={post.imageUrl} alt={`Blog Post ${post.id}`} className="w-full h-60 object-cover" />
+              <Image src={post.imageUrl} alt={`Blog Post ${post.id}`} className="w-full h-60 object-cover" />
               <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-6 text-white text-center">
                 <div>
                   <h3 className="text-xl font-bold">{post.title}</h3>

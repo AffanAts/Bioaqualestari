@@ -3,13 +3,14 @@
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { Header, Footer } from "../../components/navbar/page";
+import Image from 'next/image';
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res = await signIn('credentials', {
       redirect: false,
@@ -17,7 +18,7 @@ export default function LoginPage() {
       password,
     });
 
-    if (res.error) {
+    if (res && res.error) {
       setError(res.error);
     } else {
       // Handle successful login, e.g., redirect to home page
@@ -30,7 +31,7 @@ export default function LoginPage() {
       <Header />
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
+          <Image
             className="mx-auto h-10 w-auto"
             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
             alt="Your Company"
