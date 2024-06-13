@@ -3,7 +3,7 @@ import { parse } from 'url';
 import next from 'next';
 
 const dev = process.env.NODE_ENV !== 'production'
-const hostname = 'localhost'
+const hostname = 'https://bioaqualestari.vercel.app/'
 const port = process.env.PORT || 3000
 
 const app = next({ dev, hostname, port })
