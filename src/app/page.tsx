@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Header, Footer } from "../components/navbar/page";
-import { LandingPage, Services, AboutUs, ContactUs,Products  } from "../components/main/page";
+import { LandingPage, Services, AboutUs, ContactUs,  } from "../components/main/page";
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
       <div className="py-10 bg-white  ">
         <Services></Services>
       </div>
-      <Products></Products>
+      {/* <Products></Products> */}
       <ContactUs></ContactUs>
       <Footer></Footer>
     </>
