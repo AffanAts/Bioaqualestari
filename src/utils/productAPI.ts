@@ -14,6 +14,6 @@ export async function fetchProducts() {
   }
 
   const data = await response.json();
-  console.log('Fetched products data:', data); // Log the data for debugging
-  return data.products; // Return the products array
+  console.log('Fetched products data:', data); 
+  return data.products; 
 }

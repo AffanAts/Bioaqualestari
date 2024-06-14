@@ -14,7 +14,7 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const res = await fetch("https://bioaqualestari.hasura.app/api/rest/user", {
+        const res = await fetch("https://bioaqualestari.hasura.app/api/rest/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
