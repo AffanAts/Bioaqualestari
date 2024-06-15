@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-// import Image from "next/image";
+import Image from "next/image";
 import { fetchServices } from "../../utils/serviceAPI";
 
 interface Service {
@@ -48,7 +48,7 @@ export default function ServicesPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16 max-md:max-w-lg mx-auto">
           {services.map((service) => (
             <div key={service.id} className="bg-white cursor-pointer rounded overflow-hidden shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] relative transition-all duration-300 group">
-              <img
+              <Image
                 width={200}
                 height={200}
                 src={service.image}
