@@ -3,7 +3,7 @@
 "use client";
 
 import Sidebar from "../components/sidebar";
-import Client from "../components/client";
+import Client from "../components/client/client";
 
 const Dashboard = () => {
   {
