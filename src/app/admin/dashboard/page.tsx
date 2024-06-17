@@ -19,10 +19,13 @@ const Dashboard = () => {
 
   if (status === "authenticated") {
     return (
-      <div>
-        <Sidebar></Sidebar>
-        <div>Welcome, {session?.user?.name}! You are logged in.</div>
-        <button onClick={() => signOut()}>Logout</button>
+      <div className="flex">
+        <Sidebar />
+        <div className="p-4 flex-grow">
+          {/* Konten halaman Anda */}
+          <div>Welcome, {session?.user?.name}! You are logged in.</div>
+          <button onClick={() => signOut()}>Logout</button>
+        </div>
       </div>
     );
   }
