@@ -4,43 +4,33 @@ export const handleUpdate = async (
   e: React.FormEvent<HTMLFormElement>,
   id: number,
   name: string,
-  imageFile: File | null,
-  setImageFile: React.Dispatch<React.SetStateAction<File | null>>,
-  setImageUrl: React.Dispatch<React.SetStateAction<string>>,
+  imageUrl: string,
   toggleModal: () => void
 ) => {
   e.preventDefault();
 
-  if (!imageFile) {
-    alert("Image file is required");
-    return;
+  // Prepare the update payload
+  const updatedFields: { name?: string; image?: string } = {};
+
+  // Only update name if it's changed
+  if (name) {
+    updatedFields.name = name;
   }
 
-  // Convert image file to base64
-  const toBase64 = (file: File): Promise<string> =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = error => reject(error);
-    });
+  // Only update image if a new URL is provided
+  if (imageUrl) {
+    updatedFields.image = imageUrl;
+  }
 
-  let base64Image;
-  try {
-    base64Image = await toBase64(imageFile);
-  } catch (error) {
-    console.error("Failed to convert image to base64:", error);
-    alert("Failed to process image");
+  if (Object.keys(updatedFields).length === 0) {
+    alert("No fields to update");
     return;
   }
 
   try {
-    await updateClient(id, { name, image: base64Image });
+    await updateClient(id, updatedFields);
     alert("Client updated successfully");
     toggleModal(); // Close the modal
-    // Reset fields
-    setImageFile(null);
-    setImageUrl("");
   } catch (error) {
     console.error("Failed to update client:", error);
     alert("Failed to update client");

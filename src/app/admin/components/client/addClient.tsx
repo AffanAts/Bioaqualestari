@@ -1,22 +1,14 @@
 import { useState, ChangeEvent } from "react";
 import { handleSubmit } from "./addClientHandler";
+import Image from "next/image";
 
 const ModalClient = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [name, setName] = useState<string>("");
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
-  };
-
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImageFile(file);
-      setImageUrl(URL.createObjectURL(file));
-    }
   };
 
   return (
@@ -34,7 +26,7 @@ const ModalClient = () => {
           aria-hidden="true"
           className="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full overflow-y-auto overflow-x-hidden bg-black bg-opacity-50"
         >
-          <div className="relative p-4 w-full max-w-md max-h-full">
+          <div className="relative p-4 w-full max-w-2xl max-h-full">
             <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
               <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -65,16 +57,7 @@ const ModalClient = () => {
               </div>
               <form
                 className="p-4 md:p-5"
-                onSubmit={(e) =>
-                  handleSubmit(
-                    e,
-                    name,
-                    imageFile,
-                    setImageFile,
-                    setImageUrl,
-                    toggleModal
-                  )
-                }
+                onSubmit={(e) => handleSubmit(e, name, imageUrl, toggleModal)}
               >
                 <div className="grid gap-4 mb-4 grid-cols-2">
                   <div className="col-span-2">
@@ -96,23 +79,28 @@ const ModalClient = () => {
                   </div>
                   <div className="col-span-2">
                     <label
-                      htmlFor="imageFile"
+                      htmlFor="imageUrl"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      Upload Image
+                      Image URL
                     </label>
                     <input
-                      type="file"
-                      name="imageFile"
-                      id="imageFile"
-                      accept="image/*"
+                      type="text"
+                      name="imageUrl"
+                      id="imageUrl"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                      onChange={handleImageChange}
+                      placeholder="Paste image URL here"
+                      value={imageUrl}
+                      onChange={(e) => setImageUrl(e.target.value)}
                     />
                   </div>
                   {imageUrl && (
                     <div className="col-span-2">
-                      <img src={imageUrl} alt="Selected" className="rounded-lg" />
+                      <img
+                        src={imageUrl}
+                        alt="Selected"
+                        className="rounded-lg"
+                      />
                     </div>
                   )}
                 </div>
@@ -134,6 +122,56 @@ const ModalClient = () => {
                   </svg>
                   Add new client
                 </button>
+                <div className="col-span-2 pt-5">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <b>Tutorial mendapatkan Link URL gambar</b>
+                  </p>
+                  <ol className="text-sm text-gray-600 dark:text-gray-400 list-decimal list-inside pt-2">
+                    <li>
+                      Kunjungi Website Berikut{" "}
+                      <a
+                        href="https://img.doerig.dev/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 hover:underline"
+                      >
+                        Klik Disini
+                      </a>{" "}
+                    </li>
+                    <li>
+                      Klik &quot;Upload a file&quot; seperti pada gambar berikut
+                      <center>
+                        {" "}
+                        <div className="relative w-full h-56">
+                          <Image
+                            src="https://i.imgur.com/JcjYQZ6.jpeg"
+                            alt="Gambar"
+                            layout="fill"
+                            objectFit="contain"
+                          />
+                        </div>
+                      </center>
+                    </li>
+                    <li>
+                      Pilihlah gambar yang ingin anda upload dan klik button
+                      &quot;upload&quot;
+                    </li>
+                    <li>
+                      Jika berhasil akan ada tulisan &quot;Success&quot; dan anda bisa
+                      menyalin link gambar tersebut
+                      <center>
+                        <div className="relative w-full h-80">
+                          <Image
+                            alt="Gambar"
+                            layout="fill"
+                            objectFit="contain"
+                            src="https://i.imgur.com/lndMtjB.jpeg"
+                          />
+                        </div>
+                      </center>
+                    </li>
+                  </ol>
+                </div>
               </form>
             </div>
           </div>

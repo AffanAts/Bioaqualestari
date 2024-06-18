@@ -44,7 +44,7 @@ export async function insertClient(newClient: { name: string; image: string }) {
 }
 
 
-export async function updateClient(id: number, updatedClient: { name: string; image: string }) {
+export async function updateClient(id: number, updatedClient: { name?: string; image?: string }) {
   const response = await fetch(`${HASURA_API_BASE_URL}/client/update/${id}`, {
     method: "PUT",
     headers: headers,
@@ -59,6 +59,7 @@ export async function updateClient(id: number, updatedClient: { name: string; im
   console.log("Updated client data:", data); // Log the data for debugging
   return data;
 }
+
 
 export async function deleteClient(id: number): Promise<void> {
   const response = await fetch(`${HASURA_API_BASE_URL}/client/delete/${id}`, {
