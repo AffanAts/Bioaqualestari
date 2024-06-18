@@ -1,27 +1,30 @@
 // components/Sidebar.tsx
 import { useState, useEffect } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
-import Link from 'next/link'
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const Sidebar: React.FC = () => {
   const { data: session, status } = useSession();
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   const toggleMenu = () => {
     setOpen(!open);
   };
+
   useEffect(() => {
     if (status === "unauthenticated") {
       signIn();
     }
   }, [status]);
 
-  // if (status === "loading") {
-  //   return <div>Loading...</div>;
-  // }
+  const linkClass = (path: string) => 
+    pathname === path
+      ? "block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-gray-200 rounded-lg dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
+      : "block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline";
 
-  if (status === "authenticated") 
-    {
+  if (status === "authenticated") {
     return (
       <div className="md:flex flex-col w-full md:w-64 text-gray-700 bg-white dark:text-gray-200 dark:bg-gray-800 flex-shrink-0">
         <div className="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
@@ -53,34 +56,19 @@ const Sidebar: React.FC = () => {
           </button>
         </div>
         <nav className={`md:block ${open ? "block" : "hidden"}`}>
-          <Link
-            className="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-gray-200 rounded-lg dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-            href="/admin/dashboard"
-          >
+          <Link className={linkClass("/admin/dashboard")} href="/admin/dashboard">
             Dashboard
           </Link>
-          <Link
-            className="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-            href="/admin/client"
-          >
+          <Link className={linkClass("/admin/client")} href="/admin/client">
             Client
           </Link>
-          <Link
-            className="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-            href="/admin/project"
-          >
+          <Link className={linkClass("/admin/project")} href="/admin/project">
             Project
           </Link>
-          <Link
-            className="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-            href="/admin/service"
-          >
+          <Link className={linkClass("/admin/service")} href="/admin/service">
             Service
           </Link>
-          <Link
-            className="block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
-            href="/admin/blog"
-          >
+          <Link className={linkClass("/admin/blog")} href="/admin/blog">
             Blog
           </Link>
           <button

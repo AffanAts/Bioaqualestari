@@ -5,6 +5,7 @@ const ModalClient = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string>("");
+  const [imageLink, setImageLink] = useState<string>("");
   const [name, setName] = useState<string>("");
 
   const toggleModal = () => {
@@ -16,7 +17,14 @@ const ModalClient = () => {
     if (file) {
       setImageFile(file);
       setImageUrl(URL.createObjectURL(file));
+      setImageLink(""); // Reset link input if file is selected
     }
+  };
+
+  const handleImageLinkChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setImageLink(e.target.value);
+    setImageFile(null); // Reset file input if link is provided
+    setImageUrl(e.target.value); // Set imageUrl to the link
   };
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -79,7 +87,9 @@ const ModalClient = () => {
                     e,
                     name,
                     imageFile,
+                    imageLink,
                     setImageFile,
+                    setImageLink,
                     setImageUrl,
                     toggleModal
                   )
@@ -117,6 +127,25 @@ const ModalClient = () => {
                       accept="image/*"
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                       onChange={handleImageFileChange}
+                      disabled={!!imageLink}
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    <label
+                      htmlFor="imageLink"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Image Link
+                    </label>
+                    <input
+                      type="text"
+                      name="imageLink"
+                      id="imageLink"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                      placeholder="Type or paste image link"
+                      onChange={handleImageLinkChange}
+                      value={imageLink}
+                      disabled={!!imageFile}
                     />
                   </div>
                   {imageUrl && (
@@ -137,7 +166,7 @@ const ModalClient = () => {
                   >
                     <path
                       fillRule="evenodd"
-                      d="M10 5a1 1 0 011 1v3h3a1 1 110 2h-3v3a1 1 11-2 0v-3H6a1 1 110-2h3V6a1 1 111-1z"
+                      d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                       clipRule="evenodd"
                     ></path>
                   </svg>
@@ -153,3 +182,88 @@ const ModalClient = () => {
 };
 
 export default ModalClient;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+addClientHandler
+
+
+
+// src/utils/addClientHandler.tsx
+import { insertClient } from "../../../../utils/clientAPI";
+
+export const uploadImage = async (file: File): Promise<string> => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await fetch("/api/upload", {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to upload image");
+  }
+
+  const data = await response.json();
+  return data.filePath; // Assuming the response contains the file path
+};
+
+export const handleSubmit = async (
+  e: React.FormEvent<HTMLFormElement>,
+  name: string,
+  imageFile: File | null,
+  imageLink: string,
+  setImageFile: React.Dispatch<React.SetStateAction<File | null>>,
+  setImageLink: React.Dispatch<React.SetStateAction<string>>,
+  setImageUrl: React.Dispatch<React.SetStateAction<string>>,
+  toggleModal: () => void
+) => {
+  e.preventDefault();
+  let image = imageLink;
+
+  if (imageFile) {
+    try {
+      const filePath = await uploadImage(imageFile);
+      image = filePath;
+    } catch (error) {
+      console.error("Failed to upload image:", error);
+      alert("Failed to upload image");
+      return;
+    }
+  }
+
+  if (!name || !image) {
+    alert("Name and image are required");
+    return;
+  }
+
+  try {
+    const newClient = { name, image };
+    await insertClient(newClient);
+    alert("Client added successfully");
+    toggleModal(); // Close the modal
+    // Reset fields
+    setImageFile(null);
+    setImageLink("");
+    setImageUrl("");
+  } catch (error) {
+    console.error("Failed to add client:", error);
+    alert("Failed to add client");
+  }
+};

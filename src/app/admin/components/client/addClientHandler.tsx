@@ -22,24 +22,26 @@ export const handleSubmit = async (
   e: React.FormEvent<HTMLFormElement>,
   name: string,
   imageFile: File | null,
-  imageLink: string,
   setImageFile: React.Dispatch<React.SetStateAction<File | null>>,
-  setImageLink: React.Dispatch<React.SetStateAction<string>>,
   setImageUrl: React.Dispatch<React.SetStateAction<string>>,
   toggleModal: () => void
 ) => {
   e.preventDefault();
-  let image = imageLink;
 
-  if (imageFile) {
-    try {
-      const filePath = await uploadImage(imageFile);
-      image = filePath;
-    } catch (error) {
-      console.error("Failed to upload image:", error);
-      alert("Failed to upload image");
-      return;
-    }
+  if (!imageFile) {
+    alert("Image file is required");
+    return;
+  }
+
+  let image = "";
+
+  try {
+    const filePath = await uploadImage(imageFile);
+    image = filePath;
+  } catch (error) {
+    console.error("Failed to upload image:", error);
+    alert("Failed to upload image");
+    return;
   }
 
   if (!name || !image) {
@@ -54,7 +56,6 @@ export const handleSubmit = async (
     toggleModal(); // Close the modal
     // Reset fields
     setImageFile(null);
-    setImageLink("");
     setImageUrl("");
   } catch (error) {
     console.error("Failed to add client:", error);
