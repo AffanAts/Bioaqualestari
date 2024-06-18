@@ -1,4 +1,3 @@
-// src/utils/clientAPI.ts
 import { HASURA_API_BASE_URL, HASURA_ADMIN_SECRET } from "../config";
 
 const headers = {
@@ -28,36 +27,37 @@ export async function fetchClients(): Promise<Client[]> {
   return data.client; // Return the clients array
 }
 
-export async function insertClient(client: Omit<Client, 'id'>): Promise<Client> {
+export async function insertClient(newClient: { name: string; image: string }) {
   const response = await fetch(`${HASURA_API_BASE_URL}/client/insert`, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({ client })
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(newClient),
   });
 
   if (!response.ok) {
     throw new Error("Failed to insert client");
   }
 
-  const data: { client: Client } = await response.json();
+  const data = await response.json();
   console.log("Inserted client data:", data); // Log the data for debugging
-  return data.client;
+  return data;
 }
 
-export async function updateClient(id: number, client: Omit<Client, 'id'>): Promise<Client> {
+
+export async function updateClient(id: number, updatedClient: { name: string; image: string }) {
   const response = await fetch(`${HASURA_API_BASE_URL}/client/update/${id}`, {
-    method: 'PUT',
-    headers,
-    body: JSON.stringify({ client })
+    method: "PUT",
+    headers: headers,
+    body: JSON.stringify(updatedClient),
   });
 
   if (!response.ok) {
     throw new Error("Failed to update client");
   }
 
-  const data: { client: Client } = await response.json();
+  const data = await response.json();
   console.log("Updated client data:", data); // Log the data for debugging
-  return data.client;
+  return data;
 }
 
 export async function deleteClient(id: number): Promise<void> {
@@ -72,3 +72,5 @@ export async function deleteClient(id: number): Promise<void> {
 
   console.log(`Deleted client with id: ${id}`); // Log the deleted client id for debugging
 }
+
+

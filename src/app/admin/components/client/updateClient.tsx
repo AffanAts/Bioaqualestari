@@ -1,14 +1,26 @@
 import { useState, ChangeEvent } from "react";
-import { handleSubmit } from "./addClientHandler";
+import { handleUpdate } from "./updateClientHandler";
 
-const ModalClient = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+interface Client {
+  id: number;
+  name: string;
+  image: string;
+}
+
+interface ModalUpdateClientProps {
+  client: Client;
+  onClose: () => void;
+}
+
+const ModalUpdateClient: React.FC<ModalUpdateClientProps> = ({ client, onClose }) => {
+  const [isModalOpen, setIsModalOpen] = useState(true);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imageUrl, setImageUrl] = useState<string>("");
-  const [name, setName] = useState<string>("");
+  const [imageUrl, setImageUrl] = useState<string>(client.image);
+  const [name, setName] = useState<string>(client.name);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
+    onClose();
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -21,13 +33,6 @@ const ModalClient = () => {
 
   return (
     <div>
-      <button
-        onClick={toggleModal}
-        className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        type="button"
-      >
-        Tambah Client
-      </button>
       {isModalOpen && (
         <div
           id="crud-modal"
@@ -38,7 +43,7 @@ const ModalClient = () => {
             <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
               <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                  Create New Client
+                  Update Client
                 </h3>
                 <button
                   type="button"
@@ -66,8 +71,9 @@ const ModalClient = () => {
               <form
                 className="p-4 md:p-5"
                 onSubmit={(e) =>
-                  handleSubmit(
+                  handleUpdate(
                     e,
+                    client.id,
                     name,
                     imageFile,
                     setImageFile,
@@ -132,7 +138,7 @@ const ModalClient = () => {
                       clipRule="evenodd"
                     ></path>
                   </svg>
-                  Add new client
+                  Update client
                 </button>
               </form>
             </div>
@@ -143,4 +149,4 @@ const ModalClient = () => {
   );
 };
 
-export default ModalClient;
+export default ModalUpdateClient;

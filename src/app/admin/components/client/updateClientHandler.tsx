@@ -1,7 +1,8 @@
-import { insertClient } from "../../../../utils/clientAPI";
+import { updateClient } from "../../../../utils/clientAPI";
 
-export const handleSubmit = async (
+export const handleUpdate = async (
   e: React.FormEvent<HTMLFormElement>,
+  id: number,
   name: string,
   imageFile: File | null,
   setImageFile: React.Dispatch<React.SetStateAction<File | null>>,
@@ -34,14 +35,14 @@ export const handleSubmit = async (
   }
 
   try {
-    await insertClient({ name, image: base64Image });
-    alert("Client added successfully");
+    await updateClient(id, { name, image: base64Image });
+    alert("Client updated successfully");
     toggleModal(); // Close the modal
     // Reset fields
     setImageFile(null);
     setImageUrl("");
   } catch (error) {
-    console.error("Failed to add client:", error);
-    alert("Failed to add client");
+    console.error("Failed to update client:", error);
+    alert("Failed to update client");
   }
 };

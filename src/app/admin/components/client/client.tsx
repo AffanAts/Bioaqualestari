@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { fetchClients, Client } from "../../../../utils/clientAPI"; // Sesuaikan path sesuai struktur proyek Anda
 import ModalClient from "./addClient";
+import ModalUpdateClient from "./updateClient";
 import { handleDeleteClient } from "./deleteClientHandler";
 
 const TableComponent: React.FC = () => {
   const [clients, setClients] = useState<Client[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [clientsPerPage] = useState(10);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const getClients = async () => {
@@ -98,10 +100,25 @@ const TableComponent: React.FC = () => {
                   />
                 </td>
                 <td className="px-6 py-4">
-                  <button className="text-blue-600 hover:underline">
-                    Edit
+                  <button
+                    className="text-blue-600 hover:underline"
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    Update Client
                   </button>
-                  <button onClick={() => handleDeleteClient(client.id, clients, setClients)} className="text-red-600 hover:underline ml-2">
+                  {isModalOpen && (
+                    <ModalUpdateClient
+                      client={client}
+                      onClose={() => setIsModalOpen(false)}
+                    />
+                  )}
+
+                  <button
+                    onClick={() =>
+                      handleDeleteClient(client.id, clients, setClients)
+                    }
+                    className="text-red-600 hover:underline ml-2"
+                  >
                     Delete
                   </button>
                 </td>
