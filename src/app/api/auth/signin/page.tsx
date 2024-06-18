@@ -1,26 +1,29 @@
 "use client";
-import type {
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-} from "next";
+
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Header from "../../../../components/navbar/header";
 
 export default function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
+
     const result = await signIn("credentials", {
       redirect: false,
       username,
       password,
     });
+
+    setIsLoading(false);
 
     if (result?.error) {
       setError("Invalid username or password");
@@ -32,7 +35,10 @@ export default function SignIn() {
   return (
     <div>
       <section className="bg-white">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <Header></Header>
+        <div className="flex flex-col items-center justify-center px-6 mx-auto md:pt-24">
+          {" "}
+          {/* Update here */}
           <div className="mt-12 md:mt-0">
             <a
               href="#"
@@ -110,15 +116,44 @@ export default function SignIn() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                  style={{ borderWidth: "1px", height: "48px" }}
+                  className={`bg-indigo-500 text-black w-full bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 ${
+                    isLoading ? "cursor-not-allowed" : ""
+                  }`}
+                  disabled={isLoading}
                 >
-                  Sign in
+                  {isLoading ? (
+                    <>
+                      <svg
+                        className="animate-spin h-5 w-5 mr-3 inline-block"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 0a6 6 0 016-6V2C7.477 2 2 7.477 2 12h4zm-2 0h4a6 6 0 016 6v2a8 8 0 01-8-8zm-2 0h4a6 6 0 016-6V2a8 8 0 01-8 8H4z"
+                        ></path>
+                      </svg>
+                      Processing...
+                    </>
+                  ) : (
+                    "Sign in"
+                  )}
                 </button>
+
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                   Don’t have an account yet?{" "}
                   <a
                     href="#"
-                    className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                    className="font-medium text-primary-600 hover:underline dark:text-primary-500 text-black"
                   >
                     Sign up
                   </a>
@@ -128,31 +163,6 @@ export default function SignIn() {
           </div>
         </div>
       </section>
-      {/* <h1>Sign In</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            Username
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Password
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </label>
-        </div>
-        {error && <p>{error}</p>}
-        <button type="submit">Sign In</button>
-      </form> */}
     </div>
   );
 }
