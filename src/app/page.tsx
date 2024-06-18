@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Header, Footer } from "../components/navbar/page";
-import { LandingPage, Services, AboutUs, ContactUs, OurAdvantages } from "../components/main/page";
+import { LandingPage, Services, AboutUs, ContactUs, OurAdvantages, Client } from "../components/main/page";
 
 export default function Home() {
   return (
@@ -16,6 +16,7 @@ export default function Home() {
       {/* <Products></Products> */}
       <ContactUs></ContactUs>
       <OurAdvantages></OurAdvantages>
+      <Client></Client>
       <Footer></Footer>
       <div></div>
     </>
