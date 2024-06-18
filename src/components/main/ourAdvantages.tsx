@@ -1,35 +1,61 @@
-const OurAdvantages = () => {
+import { FC } from 'react';
+import Image from 'next/image';
+
+import lightbulbIcon from "../../app/assets/logo/lightbulb.svg";
+import handshakeIcon from "../../app/assets/logo/handshake.svg";
+import deliveryIcon from "../../app/assets/logo/delivery.svg";
+import distributionIcon from "../../app/assets/logo/box.svg";
+import { StaticImageData } from '../../../node_modules/next/image';
+
+interface Advantage {
+  title: string;
+  text: string;
+  imageUrl: StaticImageData; // Adjust according to Next.js Image type
+}
+
+const data: Advantage[] = [
+  {
+    title: "Innovation",
+    text: "We strive to continuously create innovative applications and new quality products to meet market demands.",
+    imageUrl: lightbulbIcon,
+  },
+  {
+    title: "Commitment",
+    text: "Maintaining and ensuring the consistency of our products in terms of quantity, quality, and flavor to achieve consumer satisfaction, as consumer satisfaction is our main commitment.",
+    imageUrl: handshakeIcon,
+  },
+  {
+    title: "Delivery",
+    text: "Ensuring safe, fast, and accurate product delivery to the consumer's hands.",
+    imageUrl: deliveryIcon,
+  },
+  {
+    title: "Distribution",
+    text: "We have a reliable national and international distribution network.",
+    imageUrl: distributionIcon,
+  },
+];
+
+const OurAdvantages: FC = () => {
   return (
-    <>
-      <div className="pt-10 text-center text-black">
-        <h1 className="flex justify-center font-extrabold text-4xl">Kelebihan Kami</h1>
-        <p className="pt-7 px-4 sm:px-10 md:px-20 lg:px-40">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque quasi reprehenderit quis nesciunt expedita vitae, eveniet sit voluptatibus obcaecati nihil in. Necessitatibus rem cupiditate, dolorum et saepe alias ea laborum.
-        </p>
+    <div className="container mx-auto py-12 px-4 text-black">
+      <h1 className="text-4xl font-bold mb-8 text-center">Kelebihan Kami</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {data.map((item, index) => (
+          <div className="flex flex-col items-center justify-center bg-white p-6 rounded-lg shadow-md" key={index}>
+            <Image
+              src={item.imageUrl}
+              alt={item.title}
+              width={60}
+              height={60}
+              className="mb-4"
+            />
+            <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+            <p className="text-center">{item.text}</p>
+          </div>
+        ))}
       </div>
-      <div className="flex flex-col md:flex-row items-center justify-center md:justify-start md:items-start md:px-10">
-        <img 
-          src="https://www.designingbuildings.co.uk/w/images/4/4a/Construction_Workers.jpg" 
-          alt="Construction Workers" 
-          className="rounded-lg pt-10  md:ps-10" 
-          style={{ width: "300px", height: "350px" }} 
-        />
-        <div className="pt-10 md:ps-10 text-center md:text-left">
-          <div className="text-black">
-            <h5 className="font-bold">Pengalaman Teruji</h5>
-            <p>Kami telah membantu berbagai industri</p>
-          </div>
-          <div className="text-black pt-10 md:pt-20">
-            <h5 className="font-bold">Pengalaman Teruji</h5>
-            <p>Kami telah membantu berbagai industri</p>
-          </div>
-          <div className="text-black pt-10 md:pt-20">
-            <h5 className="font-bold">Pengalaman Teruji</h5>
-            <p>Kami telah membantu berbagai industri</p>
-          </div>
-        </div>
-      </div>
-    </>
+    </div>
   );
 };
 
