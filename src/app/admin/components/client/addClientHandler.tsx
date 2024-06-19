@@ -1,4 +1,5 @@
 import { insertClient } from "../../../../utils/clientAPI";
+import Swal from 'sweetalert2';
 
 export const handleSubmit = async (
   e: React.FormEvent<HTMLFormElement>,
@@ -9,16 +10,41 @@ export const handleSubmit = async (
   e.preventDefault();
 
   if (!imageUrl) {
-    alert("Image URL is required");
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Image URL is required',
+    });
     return;
   }
 
   try {
+    Swal.fire({
+      title: 'Loading...',
+      text: 'Please wait while we add the client.',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
     await insertClient({ name, image: imageUrl });
-    alert("Client added successfully");
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Success',
+      text: 'Client added successfully',
+    }).then(() => {
+      window.location.reload(); // Reload the page after showing the success message
+    });
+
     toggleModal(); // Close the modal
   } catch (error) {
     console.error("Failed to add client:", error);
-    alert("Failed to add client");
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Failed to add client',
+    });
   }
 };

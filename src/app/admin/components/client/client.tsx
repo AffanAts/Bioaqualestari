@@ -52,7 +52,8 @@ const TableComponent: React.FC = () => {
     setSelectedClient(null);
   };
 
-  const placeholderImage = "https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg"; // URL gambar placeholder
+  const placeholderImage =
+    "https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg"; // URL gambar placeholder
 
   const isValidUrl = (url: string): boolean => {
     try {
@@ -91,7 +92,7 @@ const TableComponent: React.FC = () => {
                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
               >
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {client.name}
+                  <b style={{fontSize:"25px"}}>{client.name}</b>
                 </td>
                 <td className="px-6 py-4">
                   <div className="relative w-80 h-80">
@@ -112,7 +113,7 @@ const TableComponent: React.FC = () => {
                     className="text-blue-600 hover:underline"
                     onClick={() => openModal(client)}
                   >
-                    Update Client
+                    Edit
                   </button>
                   <button
                     onClick={() =>
