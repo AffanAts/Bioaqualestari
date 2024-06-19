@@ -1,6 +1,6 @@
-const AboutUs = () => {
+const ContactUs = () => {
   return (
-    <div className="relative h-[400px] overflow-hidden rounded border p-4 shadow-lg bg-[url('https://tecdn.b-cdn.net/img/new/slides/041.webp')] bg-cover bg-no-repeat p-12 text-center text-white">
+    <div className="relative h-[400px] overflow-hidden rounded-none p-4 shadow-lg bg-[url('https://tecdn.b-cdn.net/img/new/slides/041.webp')] bg-cover bg-no-repeat p-12 text-center text-white">
       <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-black/60 bg-fixed">
         <div className="flex h-full mt-20 ms-10 justify-start ml-5">
           <div className="text-white text-left ml-5">
@@ -23,4 +23,4 @@ const AboutUs = () => {
   );
 };
 
-export default AboutUs;
+export default ContactUs;
