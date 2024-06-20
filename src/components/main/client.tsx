@@ -52,7 +52,7 @@ export default function ClientsPage() {
             Kami bangga menjadi mitra terpercaya bagi berbagai perusahaan dan organisasi di berbagai sektor industri. Klien-klien kami berasal dari beragam bidang, termasuk konstruksi, manufaktur, energi, dan banyak lagi.
           </p>
         </div>
-        <div className="w-full md:w-1/2 mt-4 md:mt-0 grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center">
+        <div className="w-full md:w-1/2 mt-4 md:mt-0 grid gap-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center">
           {clients.map((client) => (
             <div key={client.id} className="overflow-hidden rounded-lg pb-5 pe-10">
               <div className="relative">

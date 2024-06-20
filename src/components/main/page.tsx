@@ -4,10 +4,12 @@ export { default as AboutUs } from "./aboutUs"
 export { default as ContactUs } from "./contactUs" 
 export { default as OurAdvantages} from "./ourAdvantages"
 export { default as Client} from "./client"
+export { default as Blogs} from "./blog"
+export { default as OurProject} from "./ourProject"
 
 
 
 
 
 //Dummy
-export { dataServices } from "./dataServices" 
+// export { dataServices } from "./dataServices" 
