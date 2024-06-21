@@ -1,3 +1,4 @@
+// updateProjectHandler.tsx
 import { updateProject } from "../../../../utils/projectAPI";
 import Swal from 'sweetalert2';
 
@@ -6,21 +7,25 @@ export const handleUpdate = async (
   id: number,
   title: string,
   imageUrl: string,
+  description: string,
   toggleModal: () => void
 ) => {
   e.preventDefault();
 
   // Prepare the update payload
-  const updatedFields: { title?: string; image?: string } = {};
+  const updatedFields: { title?: string; image?: string; description?: string } = {};
 
-  // Only update title if it's changed
+  // Only update fields if they are changed
   if (title) {
     updatedFields.title = title;
   }
 
-  // Only update image if a new URL is provided
   if (imageUrl) {
     updatedFields.image = imageUrl;
+  }
+
+  if (description) {
+    updatedFields.description = description;
   }
 
   if (Object.keys(updatedFields).length === 0) {

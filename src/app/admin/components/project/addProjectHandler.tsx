@@ -1,10 +1,12 @@
+// addProjectHandler.tsx
 import { insertProject } from "../../../../utils/projectAPI";
 import Swal from 'sweetalert2';
 
 export const handleSubmit = async (
   e: React.FormEvent<HTMLFormElement>,
-  title: string, // Mengganti 'title' menjadi 'title'
+  title: string,
   imageUrl: string,
+  description: string,
   toggleModal: () => void
 ) => {
   e.preventDefault();
@@ -29,9 +31,9 @@ export const handleSubmit = async (
     });
 
     await insertProject({
-      title, // Mengganti 'title' menjadi 'title'
+      title,
       image: imageUrl,
-      description: ""
+      description
     });
 
     Swal.fire({

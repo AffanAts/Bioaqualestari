@@ -39,6 +39,8 @@ export const handleDeleteProject = async (
       icon: 'success',
       title: 'Deleted!',
       text: 'Project has been deleted.',
+    }).then(() => {
+      window.location.reload(); // Refresh halaman setelah berhasil menghapus proyek
     });
   } catch (error) {
     console.error("Error deleting project:", error);
