@@ -39,9 +39,9 @@ export default function BlogsPage() {
     <>
       <div className="text-black text-center py-12">
         <h1 className="font-extrabold text-4xl mb-8">Blog</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi tempore illum atque hic rerum, necessitatibus asperiores quaerat nam mollitia itaque culpa similique error dolor! Incidunt consectetur deleniti recusandae ut et?</p>
+        <p className="mx-10">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi tempore illum atque hic rerum, necessitatibus asperiores quaerat nam mollitia itaque culpa similique error dolor! Incidunt consectetur deleniti recusandae ut et?</p>
       </div>
-      <div className="flex flex-row gap-4 justify-center">
+      <div className="flex flex-row gap-4 justify-center px-10">
         {blogs.map((blog) => (
           <div key={blog.id} className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <div>

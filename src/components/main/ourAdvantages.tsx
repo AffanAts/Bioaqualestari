@@ -38,7 +38,7 @@ const data: Advantage[] = [
 
 const OurAdvantages: FC = () => {
   return (
-    <div className="container mx-auto py-12 px-4 text-black">
+    <div className="container mx-auto py-12 px-10 text-black">
       <h1 className="text-4xl font-bold mb-8 text-center">Kelebihan Kami</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {data.map((item, index) => (
