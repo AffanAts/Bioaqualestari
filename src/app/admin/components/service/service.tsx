@@ -1,51 +1,52 @@
 import React, { useEffect, useState } from "react";
-import { fetchClients, Client } from "../../../../utils/clientAPI"; // Sesuaikan path sesuai struktur proyek Anda
-import ModalClient from "./addClient";
-import ModalUpdateClient from "./updateClient";
-import { handleDeleteClient } from "./deleteClientHandler";
+import { fetchServices, Service } from "../../../../utils/serviceAPI"; // Sesuaikan path sesuai struktur proyek Anda
+import ModalService from "./addService";
+import ModalUpdateService from "./updateService";
+import { handleDeleteService } from "./deleteServiceHandler";
 import Image from "next/image";
 import Modal from "./imageModal"; // Import Modal
 
 type url = {
   image: string;
   name: string;
+  description: string;
 };
 
 const TableComponent: React.FC = () => {
-  const [clients, setClients] = useState<Client[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [clientsPerPage] = useState(10);
+  const [servicesPerPage] = useState(10);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
-  const [selectedClient, setSelectedClient] = useState<Client | null>(null); // Tambahkan ini
+  const [selectedService, setSelectedService] = useState<Service | null>(null); // Tambahkan ini
 
   useEffect(() => {
-    const getClients = async () => {
+    const getServices = async () => {
       try {
-        const data = await fetchClients();
-        setClients(data);
+        const data = await fetchServices();
+        setServices(data);
       } catch (error) {
-        console.error("Failed to fetch clients:", error);
+        console.error("Failed to fetch services:", error);
       }
     };
 
-    getClients();
+    getServices();
   }, []);
 
   // Pagination logic
-  const indexOfLastClient = currentPage * clientsPerPage;
-  const indexOfFirstClient = indexOfLastClient - clientsPerPage;
-  const currentClients = clients.slice(indexOfFirstClient, indexOfLastClient);
+  const indexOfLastService = currentPage * servicesPerPage;
+  const indexOfFirstService = indexOfLastService - servicesPerPage;
+  const currentServices = services.slice(indexOfFirstService, indexOfLastService);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   const pageNumbers = Array.from(
-    { length: Math.ceil(clients.length / clientsPerPage) },
+    { length: Math.ceil(services.length / servicesPerPage) },
     (_, i) => i + 1
   );
 
-  const openModal = (client: Client) => {
-    setSelectedClient(client);
+  const openModal = (service: Service) => {
+    setSelectedService(service);
     setIsModalOpen(true);
   };
 
@@ -57,7 +58,7 @@ const TableComponent: React.FC = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedImageUrl(null);
-    setSelectedClient(null); // Tambahkan ini
+    setSelectedService(null); // Tambahkan ini
   };
 
   const placeholderImage =
@@ -74,16 +75,19 @@ const TableComponent: React.FC = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Client Control</h1>
+      <h1 className="text-2xl font-bold mb-4">Service Control</h1>
       <div className="my-5">
-        <ModalClient />
+        <ModalService />
       </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">
-                Client Name
+                Service Name
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Description
               </th>
               <th scope="col" className="px-6 py-3">
                 Image
@@ -94,24 +98,27 @@ const TableComponent: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {currentClients.map((client) => (
+            {currentServices.map((service) => (
               <tr
-                key={client.id}
+                key={service.id}
                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
               >
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  <b style={{fontSize:"25px"}}>{client.name}</b>
+                  <b style={{fontSize:"25px"}}>{service.name}</b>
+                </td>
+                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  {service.description}
                 </td>
                 <td className=" py-4">
                   <div className="relative w-auto h-20">
                     <Image
-                      onClick={() => openImageModal(isValidUrl(client.image) ? client.image : placeholderImage)}
+                      onClick={() => openImageModal(isValidUrl(service.image) ? service.image : placeholderImage)}
                       src={
-                        isValidUrl(client.image)
-                          ? client.image
+                        isValidUrl(service.image)
+                          ? service.image
                           : placeholderImage
                       }
-                      alt={client.name}
+                      alt={service.name}
                       layout="fill"
                       objectFit="contain"
                     />
@@ -120,13 +127,13 @@ const TableComponent: React.FC = () => {
                 <td className="px-6 py-4">
                   <button
                     className="text-blue-600 hover:underline"
-                    onClick={() => openModal(client)}
+                    onClick={() => openModal(service)}
                   >
                     Edit
                   </button>
                   <button
                     onClick={() =>
-                      handleDeleteClient(client.id, clients, setClients)
+                      handleDeleteService(service.id, services, setServices)
                     }
                     className="text-red-600 hover:underline ml-2"
                   >
@@ -142,8 +149,8 @@ const TableComponent: React.FC = () => {
           aria-label="Table navigation"
         >
           <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-            Showing {indexOfFirstClient + 1}-{indexOfLastClient} of{" "}
-            {clients.length}
+            Showing {indexOfFirstService + 1}-{indexOfLastService} of{" "}
+            {services.length}
           </span>
           <ul className="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
             <li>
@@ -173,7 +180,7 @@ const TableComponent: React.FC = () => {
               <button
                 onClick={() => paginate(currentPage + 1)}
                 disabled={
-                  currentPage === Math.ceil(clients.length / clientsPerPage)
+                  currentPage === Math.ceil(services.length / servicesPerPage)
                 }
                 className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
               >
@@ -183,8 +190,8 @@ const TableComponent: React.FC = () => {
           </ul>
         </nav>
       </div>
-      {isModalOpen && selectedClient && (
-        <ModalUpdateClient client={selectedClient} onClose={closeModal} />
+      {isModalOpen && selectedService && (
+        <ModalUpdateService service={selectedService} onClose={closeModal} />
       )}
       {isModalOpen && selectedImageUrl && (
         <Modal isOpen={isModalOpen} onClose={closeModal} imageUrl={selectedImageUrl} />

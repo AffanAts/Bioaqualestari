@@ -32,6 +32,7 @@ export async function fetchBlogs(): Promise<Blog[]> {
   return data.blog; // Return the blogs array
 }
 
+<<<<<<< HEAD
 export const fetchBlogById = async (id: string): Promise<Blog> => {
   const response = await fetch(`/api/blogs/${id}`);
   const data = await response.json();
@@ -40,12 +41,19 @@ export const fetchBlogById = async (id: string): Promise<Blog> => {
 
 export async function insertBlog(newBlog: { title: string; image: string; description: string; created_at: string; author: string; }) {
   const response = await fetch(`${HASURA_API_BASE_URL}/api/rest/blog/insert`, {
+=======
+export async function insertBlog(newBlog: { title: string; image: string; description: string; author: string; }) {
+  console.log("Sending data to the server:", newBlog); // Log the data to be sent
+  const response = await fetch(`${HASURA_API_BASE_URL}/blog/insert`, {
+>>>>>>> 369876e8dbae849aa183ae948fb3fa296df4fb46
     method: "POST",
     headers: headers,
     body: JSON.stringify(newBlog),
   });
 
   if (!response.ok) {
+    const errorResponse = await response.text();
+    console.error("Failed to insert blog:", errorResponse); // Log the error response for debugging
     throw new Error("Failed to insert blog");
   }
 
@@ -54,8 +62,8 @@ export async function insertBlog(newBlog: { title: string; image: string; descri
   return data;
 }
 
-export async function updateBlog(id: number, updatedBlog: { title?: string; image?: string; description?: string; created_at?: string; author?: string; }) {
-  const response = await fetch(`${HASURA_API_BASE_URL}/api/rest/blog/update/${id}`, {
+export async function updateBlog(id: number, updatedBlog: { title?: string; image?: string; description?: string; author?: string; }) {
+  const response = await fetch(`${HASURA_API_BASE_URL}/blog/update/${id}`, {
     method: "PUT",
     headers: headers,
     body: JSON.stringify(updatedBlog),
@@ -71,7 +79,7 @@ export async function updateBlog(id: number, updatedBlog: { title?: string; imag
 }
 
 export async function deleteBlog(id: number): Promise<void> {
-  const response = await fetch(`${HASURA_API_BASE_URL}/api/rest/blog/delete/${id}`, {
+  const response = await fetch(`${HASURA_API_BASE_URL}/blog/delete/${id}`, {
     method: 'DELETE',
     headers,
   });

@@ -4,6 +4,7 @@ import ModalProject from "./addProject";
 import ModalUpdateProject from "./updateProject";
 import { handleDeleteProject } from "./deleteProjectHandler";
 import Image from "next/image";
+import Modal from "./imageModal"; // Import Modal
 
 const ReadMore: React.FC<{ text: string }> = ({ text }) => {
   const [isReadMore, setIsReadMore] = useState(true);
@@ -30,6 +31,7 @@ const TableComponent: React.FC = () => {
   const [projectsPerPage] = useState(10);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const getProjects = async () => {
@@ -61,9 +63,15 @@ const TableComponent: React.FC = () => {
     setIsModalOpen(true);
   };
 
+  const openImageModal = (url: string) => {
+    setSelectedImageUrl(url);
+    setIsModalOpen(true);
+  };
+
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedProject(null);
+    setSelectedImageUrl(null);
   };
 
   const placeholderImage =
@@ -104,8 +112,9 @@ const TableComponent: React.FC = () => {
                   <b style={{ fontSize: "15px" }}>{project.title}</b>
                 </td>
                 <td className="px-6 py-4">
-                  <div className="relative w-80 h-80">
+                  <div className="relative w-auto h-20">
                     <Image
+                      onClick={() => openImageModal(isValidUrl(project.image) ? project.image : placeholderImage)}
                       src={isValidUrl(project.image) ? project.image : placeholderImage}
                       alt={project.title}
                       layout="fill"
@@ -181,6 +190,9 @@ const TableComponent: React.FC = () => {
       </div>
       {isModalOpen && selectedProject && (
         <ModalUpdateProject project={selectedProject} onClose={closeModal} />
+      )}
+      {isModalOpen && selectedImageUrl && (
+        <Modal isOpen={isModalOpen} onClose={closeModal} imageUrl={selectedImageUrl} />
       )}
     </div>
   );

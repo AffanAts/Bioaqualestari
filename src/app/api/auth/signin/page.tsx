@@ -1,7 +1,7 @@
 "use client";
 
-import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { getSession, signIn } from "next-auth/react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Header from "../../../../components/navbar/header";
@@ -12,6 +12,17 @@ export default function SignIn() {
   const [error, setError] = useState("");
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const session = await getSession();
+      if (session) {
+        router.push("/admin/dashboard");
+      }
+    };
+
+    checkAuth();
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,8 +48,6 @@ export default function SignIn() {
       <section className="bg-white">
         <Header></Header>
         <div className="flex flex-col items-center justify-center px-6 mx-auto md:pt-24">
-          {" "}
-          {/* Update here */}
           <div className="mt-12 md:mt-0">
             <a
               href="#"
