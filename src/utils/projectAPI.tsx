@@ -13,7 +13,7 @@ export interface Project {
   image: string;
   description: string;
 }
-
+ 
 interface FetchProjectsResponse {
   project: Project[];
 }
