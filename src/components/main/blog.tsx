@@ -45,7 +45,7 @@ export default function BlogsPage() {
         {blogs.map((blog) => (
           <div key={blog.id} className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <div>
-              <img className="w-full h-48 object-cover" src={blog.image} alt={blog.title} />
+              <img className="w-full h-48 object-cover" src={blog.image??"https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg"} alt={blog.title} />
             </div>
             <Link href={`/blog/${blog.id}`}>
               <h1>

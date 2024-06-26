@@ -62,7 +62,7 @@ const ProjectsPage: React.FC = () => {
           }`}
         >
           <img
-            src={project.image}
+            src={project.image??"https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg"}
             alt={project.title}
             className="rounded-lg w-full md:w-1/2 object-cover"
             style={{ height: "300px" }}

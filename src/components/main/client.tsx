@@ -67,7 +67,7 @@ const ClientsPage: React.FC = () => {
                     <div key={client.id} className="overflow-hidden rounded-lg pb-5 px-10">
                       <div className="relative">
                         <div className="rounded-full overflow-hidden w-20 h-20 mx-auto mt-4">
-                          <img className="object-cover w-full h-full" src={client.image} alt={client.name} />
+                          <img className="object-cover w-full h-full" src={client.image??"https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg"} alt={client.name} />
                         </div>
                         {/* Example with Next.js Image component (uncomment if needed) */}
                         {/* <div className="rounded-full overflow-hidden w-20 h-20 mx-auto mt-4">
