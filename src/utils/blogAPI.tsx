@@ -20,6 +20,12 @@ interface FetchBlogsResponse {
   blog: Blog[];
 }
 
+export const fetchBlogById = async (id: string): Promise<Blog> => {
+  const response = await fetch(`${HASURA_API_BASE_URL}/blogs/${id}`, { headers });
+  const data = await response.json();
+  return data;
+};
+
 export async function fetchBlogs(): Promise<Blog[]> {
   const response = await fetch(`${HASURA_API_BASE_URL}/blogs`, { headers });
 
