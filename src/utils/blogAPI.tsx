@@ -32,20 +32,9 @@ export async function fetchBlogs(): Promise<Blog[]> {
   return data.blog; // Return the blogs array
 }
 
-<<<<<<< HEAD
-export const fetchBlogById = async (id: string): Promise<Blog> => {
-  const response = await fetch(`/api/blogs/${id}`);
-  const data = await response.json();
-  return data;
-};
-
-export async function insertBlog(newBlog: { title: string; image: string; description: string; created_at: string; author: string; }) {
-  const response = await fetch(`${HASURA_API_BASE_URL}/api/rest/blog/insert`, {
-=======
 export async function insertBlog(newBlog: { title: string; image: string; description: string; author: string; }) {
   console.log("Sending data to the server:", newBlog); // Log the data to be sent
   const response = await fetch(`${HASURA_API_BASE_URL}/blog/insert`, {
->>>>>>> 369876e8dbae849aa183ae948fb3fa296df4fb46
     method: "POST",
     headers: headers,
     body: JSON.stringify(newBlog),

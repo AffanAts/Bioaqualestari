@@ -6,7 +6,7 @@ export { default as OurAdvantages } from "./ourAdvantages";
 export { default as Client } from "./client";
 export { default as Blogs } from "./blog";
 export { default as OurProject } from "./ourProject";
-export { default as DetailBlog } from "./BlogDetails";
+
 
 //Dummy
 // export { dataServices } from "./dataServices"

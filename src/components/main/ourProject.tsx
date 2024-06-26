@@ -3,6 +3,7 @@
 
 import React, { useEffect, useState } from "react";
 import { fetchProjects } from "../../utils/projectAPI";
+import Image from "next/image";
 // import Modal from "./ModalProject";
 
 interface Project {
@@ -11,7 +12,17 @@ interface Project {
   image: string;
   description: string;
 }
+const placeholderImage =
+  "https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg"; // URL gambar placeholder
 
+const isValidUrl = (url: string): boolean => {
+  try {
+    new URL(url);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
 const ProjectsPage: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -47,10 +58,10 @@ const ProjectsPage: React.FC = () => {
       <div className="text-black text-center">
         <h1 className="font-extrabold text-4xl mb-8">Our Project</h1>
         <p className="mx-10">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi
-          tempore illum atque hic rerum, necessitatibus asperiores quaerat
-          nam mollitia itaque culpa similique error dolor! Incidunt
-          consectetur deleniti recusandae ut et?
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi tempore
+          illum atque hic rerum, necessitatibus asperiores quaerat nam mollitia
+          itaque culpa similique error dolor! Incidunt consectetur deleniti
+          recusandae ut et?
         </p>
       </div>
       {error && <div className="text-red-500">{error}</div>}
