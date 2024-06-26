@@ -16,9 +16,9 @@ export default function Home() {
       {/* <Products></Products> */}
       <ContactUs></ContactUs>
       <OurAdvantages></OurAdvantages>
-      {/* <OurProject></OurProject>
+      <OurProject></OurProject>
       <Client></Client>
-      <Blogs></Blogs> */}
+      <Blogs></Blogs>
       <Footer></Footer>
       <div></div>
     </>

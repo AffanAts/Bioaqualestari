@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { fetchBlogs } from "../../utils/blogAPI";
-import Link from 'next/link';
+import Link from "next/link";
 
 interface Blog {
   id: number;
@@ -34,18 +34,32 @@ export default function BlogsPage() {
 
     getBlogs();
   }, []);
+  
+  const placeholderImage = "https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg"; // URL gambar placeholder
+  const isValidUrl = (url: string): boolean => {
+    try {
+      new URL(url);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
 
+
+ 
   return (
     <>
       <div className="text-black text-center py-12">
         <h1 className="font-extrabold text-4xl mb-8">Blog</h1>
-        <p className="mx-10">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi tempore illum atque hic rerum, necessitatibus asperiores quaerat nam mollitia itaque culpa similique error dolor! Incidunt consectetur deleniti recusandae ut et?</p>
+        <p className="mx-10">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi tempore illum atque hic rerum, necessitatibus asperiores quaerat nam mollitia itaque culpa similique error dolor! Incidunt consectetur deleniti recusandae ut et?
+        </p>
       </div>
       <div className="flex flex-row gap-4 justify-center px-10">
         {blogs.map((blog) => (
           <div key={blog.id} className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <div>
-              <img className="w-full h-48 object-cover" src={blog.image??"https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg"} alt={blog.title} />
+              <img className="w-full h-48 object-cover" src={isValidUrl(blog.image) ? blog.image : placeholderImage} alt={blog.title} />
             </div>
             <Link href={`/blog/${blog.id}`}>
               <h1>
@@ -53,16 +67,16 @@ export default function BlogsPage() {
               </h1>
             </Link>
             <p className="mb-0 text-black pb-4">Created At: {new Date(blog.created_at).toLocaleDateString()}</p>
-            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400"><div dangerouslySetInnerHTML={{ __html: blog.description }} /></p>
+            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+              <div dangerouslySetInnerHTML={{ __html: blog.description }} />
+            </p>
             <Link href={`/blog/${blog.id}`}>
-            <h1
-              className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Read more
-              <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M1 5h12m0 0L9 1m4 4L9 9" />
-              </svg>
-            </h1>
+              <h1 className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Read more
+                <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M1 5h12m0 0L9 1m4 4L9 9" />
+                </svg>
+              </h1>
             </Link>
           </div>
         ))}

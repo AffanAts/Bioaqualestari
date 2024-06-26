@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { HASURA_API_BASE_URL, HASURA_ADMIN_SECRET } from "../config";
 
 const headers = {
@@ -7,7 +6,6 @@ const headers = {
 };
 
 export interface Blog {
-  [x: string]: ReactNode;
   id: number;
   title: string;
   image: string;
@@ -22,8 +20,11 @@ interface FetchBlogsResponse {
 
 export const fetchBlogById = async (id: string): Promise<Blog> => {
   const response = await fetch(`${HASURA_API_BASE_URL}/blogs/${id}`, { headers });
+  if (!response.ok) {
+    throw new Error("Failed to fetch blog");
+  }
   const data = await response.json();
-  return data;
+  return data.blog_by_pk; // Adjusted to return the blog data correctly
 };
 
 export async function fetchBlogs(): Promise<Blog[]> {

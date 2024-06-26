@@ -12,8 +12,7 @@ interface Project {
   image: string;
   description: string;
 }
-const placeholderImage =
-  "https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg"; // URL gambar placeholder
+const placeholderImage = "https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg"; // URL gambar placeholder
 
 const isValidUrl = (url: string): boolean => {
   try {
@@ -53,31 +52,29 @@ const ProjectsPage: React.FC = () => {
   //   setShowModal(false);
   // };
 
+  const placeholderImage = "https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg"; // URL gambar placeholder
+
+  const isValidUrl = (url: string): boolean => {
+    try {
+      new URL(url);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
+
   return (
     <>
       <div className="text-black text-center">
         <h1 className="font-extrabold text-4xl mb-8">Our Project</h1>
         <p className="mx-10">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi tempore
-          illum atque hic rerum, necessitatibus asperiores quaerat nam mollitia
-          itaque culpa similique error dolor! Incidunt consectetur deleniti
-          recusandae ut et?
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi tempore illum atque hic rerum, necessitatibus asperiores quaerat nam mollitia itaque culpa similique error dolor! Incidunt consectetur deleniti recusandae ut et?
         </p>
       </div>
       {error && <div className="text-red-500">{error}</div>}
       {projects.slice(0, 3).map((project, index) => (
-        <div
-          key={project.id}
-          className={`mx-20 flex flex-col md:flex-row gap-8 py-10 ${
-            index % 2 !== 0 ? "md:flex-row-reverse" : ""
-          }`}
-        >
-          <img
-            src={project.image??"https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg"}
-            alt={project.title}
-            className="rounded-lg w-full md:w-1/2 object-cover"
-            style={{ height: "300px" }}
-          />
+        <div key={project.id} className={`mx-20 flex flex-col md:flex-row gap-8 py-10 ${index % 2 !== 0 ? "md:flex-row-reverse" : ""}`}>
+          <img src={isValidUrl(project.image) ? project.image : placeholderImage} alt={project.title} className="rounded-lg w-full md:w-1/2 object-cover" style={{ height: "300px" }} />
           <div className="text-black m-10 w-full md:w-1/2">
             <p className="text-xl font-semibold">Our Portfolio</p>
             <p className="text-4xl font-bold">{project.title}</p>

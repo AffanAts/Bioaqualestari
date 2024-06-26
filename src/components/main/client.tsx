@@ -33,8 +33,16 @@ const ClientsPage: React.FC = () => {
     getClients();
   }, []);
 
-  const placeholderImage =
-    "https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg"; // URL gambar placeholder
+  const placeholderImage = "https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg"; // URL gambar placeholder
+
+  const isValidUrl = (url: string): boolean => {
+    try {
+      new URL(url);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
 
   // Split clients into chunks of 4 for each slide
   const chunkedClients = clients.reduce((resultArray: Client[][], item, index) => {
@@ -67,7 +75,7 @@ const ClientsPage: React.FC = () => {
                     <div key={client.id} className="overflow-hidden rounded-lg pb-5 px-10">
                       <div className="relative">
                         <div className="rounded-full overflow-hidden w-20 h-20 mx-auto mt-4">
-                          <img className="object-cover w-full h-full" src={client.image??"https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg"} alt={client.name} />
+                          <img className="object-cover w-full h-full" src={isValidUrl(client.image) ? client.image : placeholderImage} alt={client.name} />
                         </div>
                         {/* Example with Next.js Image component (uncomment if needed) */}
                         {/* <div className="rounded-full overflow-hidden w-20 h-20 mx-auto mt-4">
