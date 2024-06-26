@@ -32,7 +32,7 @@ const Sidebar: React.FC = () => {
             href="#"
             className="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline"
           >
-            Flowtrail UI
+            Bioaqualestari
           </a>
           <button
             className="rounded-lg md:hidden focus:outline-none focus:shadow-outline"
@@ -58,6 +58,9 @@ const Sidebar: React.FC = () => {
         <nav className={`md:block ${open ? "block" : "hidden"}`}>
           <Link className={linkClass("/admin/dashboard")} href="/admin/dashboard">
             Dashboard
+          </Link>
+          <Link className={linkClass("/")} href="/">
+            Halaman Utama
           </Link>
           <Link className={linkClass("/admin/client")} href="/admin/client">
             Client
