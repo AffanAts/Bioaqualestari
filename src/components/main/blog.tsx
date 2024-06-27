@@ -60,8 +60,8 @@ export default function BlogsPage() {
               <div>
                 <img className="w-full h-64 object-cover mb-4" src={isValidUrl(blogs[0].image) ? blogs[0].image : placeholderImage} alt={blogs[0].title} />
                 <p className="text-gray-500 mb-1">{new Date(blogs[0].created_at).toLocaleDateString()}</p>
-                <h2 className="text-3xl font-bold text-white mb-4">{blogs[0].title}</h2>
-                <p className="text-gray-400">
+                <h2 className="text-3xl font-bold text-black mb-4">{blogs[0].title}</h2>
+                <p className="text-black">
                   <div dangerouslySetInnerHTML={{ __html: blogs[0].description }} />
                 </p>
               </div>

@@ -114,7 +114,7 @@ const BlogComponent: React.FC = () => {
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   <b style={{fontSize:"25px"}}>{blog.title}</b>
                 </td>
-                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <td className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-white">
                   <div dangerouslySetInnerHTML={{ __html: blog.description }} />
                 </td>
                 <td className=" py-4">
