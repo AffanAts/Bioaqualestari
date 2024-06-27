@@ -3,6 +3,7 @@ import { fetchBlogs, Blog } from "../../../../utils/blogAPI"; // Sesuaikan path 
 import ModalBlog from "./addBlog";
 import ModalUpdateBlog from "./updateBlog";
 import { handleDeleteBlog } from "./deleteBlogHandler";
+import ModalComments from "./comment/commentBlog"; // Import ModalComments
 import Image from "next/image";
 import Modal from "./imageModal"; // Import Modal
 
@@ -14,6 +15,7 @@ const BlogComponent: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
   const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
+  const [selectedBlogId, setSelectedBlogId] = useState<number | null>(null); // Tambahkan state untuk blogId
 
   useEffect(() => {
     const getBlogs = async () => {
@@ -60,10 +62,16 @@ const BlogComponent: React.FC = () => {
     setIsModalOpen(true);
   };
 
+  const openCommentsModal = (blogId: number) => {
+    setSelectedBlogId(blogId);
+    setIsModalOpen(true);
+  };
+
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedImageUrl(null);
     setSelectedBlog(null);
+    setSelectedBlogId(null);
   };
 
   const placeholderImage =
@@ -98,9 +106,6 @@ const BlogComponent: React.FC = () => {
                 Image
               </th>
               <th scope="col" className="px-6 py-3">
-                Created At
-              </th>
-              <th scope="col" className="px-6 py-3">
                 Actions
               </th>
             </tr>
@@ -112,12 +117,12 @@ const BlogComponent: React.FC = () => {
                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
               >
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  <b style={{fontSize:"25px"}}>{blog.title}</b>
+                  <b style={{ fontSize: "25px" }}>{blog.title}</b>
                 </td>
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   <div dangerouslySetInnerHTML={{ __html: blog.description }} />
                 </td>
-                <td className=" py-4">
+                <td className="py-4">
                   <div className="relative w-auto h-20">
                     <Image
                       onClick={() => openImageModal(isValidUrl(blog.image) ? blog.image : placeholderImage)}
@@ -133,9 +138,6 @@ const BlogComponent: React.FC = () => {
                     />
                   </div>
                 </td>
-                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {new Date(blog.created_at).toLocaleString()}
-                </td>
                 <td className="px-6 py-4">
                   <button
                     className="text-blue-600 hover:underline"
@@ -150,6 +152,12 @@ const BlogComponent: React.FC = () => {
                     className="text-red-600 hover:underline ml-2"
                   >
                     Delete
+                  </button>
+                  <button
+                    onClick={() => openCommentsModal(blog.id)}
+                    className="text-green-600 hover:underline ml-2"
+                  >
+                    Comments
                   </button>
                 </td>
               </tr>
@@ -207,6 +215,9 @@ const BlogComponent: React.FC = () => {
       )}
       {isModalOpen && selectedImageUrl && (
         <Modal isOpen={isModalOpen} onClose={closeModal} imageUrl={selectedImageUrl} />
+      )}
+      {isModalOpen && selectedBlogId && (
+        <ModalComments blogId={selectedBlogId} onClose={closeModal} />
       )}
     </div>
   );
