@@ -12,10 +12,23 @@ export interface Blog {
   description: string;
   created_at: string;
   author: string;
+  comments: Comment[];
+}
+
+export interface Comment {
+  id: number;
+  comment: string;
+  blog_id: number;
+  name: string;
+  created_at: string;
 }
 
 interface FetchBlogsResponse {
   blog: Blog[];
+}
+
+interface FetchBlogByIdResponse {
+  blog_by_pk: Blog;
 }
 
 export const fetchBlogById = async (id: string): Promise<Blog> => {
@@ -23,8 +36,9 @@ export const fetchBlogById = async (id: string): Promise<Blog> => {
   if (!response.ok) {
     throw new Error("Failed to fetch blog");
   }
-  const data = await response.json();
-  return data.blog_by_pk; // Adjusted to return the blog data correctly
+  const data: FetchBlogByIdResponse = await response.json();
+  console.log("Fetched blog by id data:", data); // Log the data for debugging
+  return data.blog_by_pk; // Mengembalikan data blog beserta komentar terkaitnya
 };
 
 export async function fetchBlogs(): Promise<Blog[]> {

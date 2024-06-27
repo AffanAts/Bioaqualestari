@@ -3,6 +3,14 @@
 import React, { useEffect, useState } from "react";
 import { fetchBlogById } from "../../../utils/blogAPI";
 
+interface Comment {
+  id: number;
+  comment: string;
+  blog_id: number;
+  name: string;
+  created_at: string;
+}
+
 interface Blog {
   id: number;
   title: string;
@@ -10,6 +18,7 @@ interface Blog {
   description: string;
   created_at: string;
   author: string;
+  comments: Comment[]; // Menambahkan properti comments
 }
 
 export default function BlogDetails({ params }: { params: { blogId: string } }) {
@@ -54,6 +63,19 @@ export default function BlogDetails({ params }: { params: { blogId: string } }) 
         </p>
         <img className="w-full h-64 object-cover mb-4" src={blog.image} alt={blog.title} />
         <p className="text-lg">{blog.description}</p>
+      </div>
+      <div className="container mx-auto p-4">
+        <h2 className="text-2xl font-bold mb-4">Comments</h2>
+        {blog.comments.length > 0 ? (
+          blog.comments.map((comment) => (
+            <div key={comment.id} className="mb-4">
+              <p className="text-gray-600 mb-1"><strong>{comment.name}</strong> on {new Date(comment.created_at).toLocaleDateString()}</p>
+              <p>{comment.comment}</p>
+            </div>
+          ))
+        ) : (
+          <p>No comments yet.</p>
+        )}
       </div>
     </>
   );
