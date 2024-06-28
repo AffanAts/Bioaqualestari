@@ -1,9 +1,7 @@
-"use client";
+"use client"; // Ensure this is at the top
 
 import React, { useEffect, useState } from "react";
 import { fetchBlogById } from "../../../utils/blogAPI";
-import Link from "next/link";
-import { insertComment } from "@/utils/commentAPI";
 
 interface Comment {
   id: number;
@@ -12,7 +10,7 @@ interface Comment {
   name: string;
   created_at: string;
 }
-
+ 
 interface Blog {
   id: number;
   title: string;
@@ -20,7 +18,7 @@ interface Blog {
   description: string;
   created_at: string;
   author: string;
-  comments: Comment[];
+  comments: Comment[]; // Menambahkan properti comments
 }
 
 export default function BlogDetails({ params }: { params: { blogId: string } }) {
@@ -86,21 +84,20 @@ export default function BlogDetails({ params }: { params: { blogId: string } }) 
 
   return (
     <>
-      <p className="text-black">
-        <Link href="/">Back</Link>
-      </p>
+      <p className="text-black"><Link href="/blog">Back</Link></p>
       <div key={blog.id} className="container mx-auto p-4 text-black px-60">
         <h1 className="text-4xl font-bold mb-4">{blog.title}</h1>
         <p className="text-gray-600 mb-4">
           By {blog.author} on {new Date(blog.created_at).toLocaleDateString()}
         </p>
-        <img className="w-full h-70 object-cover mb-4" src={blog.image} alt={blog.title} />
+        <img className="w-full h-64 object-cover mb-4" src={blog.image} alt={blog.title} />
         <div className="text-lg" dangerouslySetInnerHTML={{ __html: blog.description }}></div>
       </div>
       <div className="px-20">
         <h1 className="text-black text-3xl font-bold">Related Contents</h1>
+        
       </div>
-      <div className="container p-4 text-black px-20">
+      <div className="container p-4 text-black px-60">
         <h2 className="text-2xl font-bold mb-4">Comments</h2>
         {blog.comments.length > 0 ? (
           blog.comments.map((comment) => (

@@ -108,6 +108,9 @@ const BlogComponent: React.FC = () => {
               <th scope="col" className="px-6 py-3">
                 Actions
               </th>
+              <th scope="col" className="px-6 py-3">
+                Comments
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -153,6 +156,8 @@ const BlogComponent: React.FC = () => {
                   >
                     Delete
                   </button>
+                </td>
+                <td className="px-6 py-4">
                   <button
                     onClick={() => openCommentsModal(blog.id)}
                     className="text-green-600 hover:underline ml-2"
