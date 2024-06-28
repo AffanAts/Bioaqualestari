@@ -1,10 +1,15 @@
 import React, { useState, ChangeEvent } from "react";
 import { handleUpdate } from "./updateBlogHandler";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css"; // Import the styles
+import TutorialGambar from "../../../../components/tutorialImage";
 import Image from "next/image";
+import {
+  placeholderImage,
+  isValidUrl,
+} from "../../../../components/invalidImage";
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 interface Blog {
   id: number;
@@ -64,7 +69,15 @@ const ModalUpdateBlog: React.FC<ModalUpdateBlogProps> = ({ blog, onClose }) => {
             <form
               className="p-4 md:p-5"
               onSubmit={(e) =>
-                handleUpdate(e, blog.id, title, image, description, author, onClose)
+                handleUpdate(
+                  e,
+                  blog.id,
+                  title,
+                  image,
+                  description,
+                  author,
+                  onClose
+                )
               }
             >
               <div className="grid gap-4 mb-4 grid-cols-1 md:grid-cols-2">
@@ -104,8 +117,14 @@ const ModalUpdateBlog: React.FC<ModalUpdateBlogProps> = ({ blog, onClose }) => {
                     />
                   </div>
                   {image && (
-                    <div className="col-span-2">
-                      <img src={image} alt="Selected" className="rounded-lg" />
+                    <div className="relative mt-3 h-36">
+                      <Image
+                        src={isValidUrl(image) ? image : placeholderImage}
+                        alt="Selected"
+                        className="rounded-lg"
+                        layout="fill"
+                        objectFit="contain"
+                      />
                     </div>
                   )}
                   <div className="col-span-2">
@@ -153,56 +172,7 @@ const ModalUpdateBlog: React.FC<ModalUpdateBlogProps> = ({ blog, onClose }) => {
                     Update blog
                   </button>
                 </div>
-                <div className="col-span-1 pt-5 md:pt-0">
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    <b>Tutorial mendapatkan Link URL gambar</b>
-                  </p>
-                  <ol className="text-sm text-gray-600 dark:text-gray-400 list-decimal list-inside pt-2">
-                    <li>
-                      Kunjungi Website Berikut{" "}
-                      <a
-                        href="https://img.doerig.dev/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-500 hover:underline"
-                      >
-                        Klik Disini
-                      </a>{" "}
-                    </li>
-                    <li>
-                      Klik &quot;Upload a file&quot; seperti pada gambar berikut
-                      <center>
-                        {" "}
-                        <div className="relative w-full h-56">
-                          <Image
-                            src="https://i.imgur.com/JcjYQZ6.jpeg"
-                            alt="Gambar"
-                            layout="fill"
-                            objectFit="contain"
-                          />
-                        </div>
-                      </center>
-                    </li>
-                    <li>
-                      Pilihlah gambar yang ingin anda upload dan klik button
-                      &quot;upload&quot;
-                    </li>
-                    <li>
-                      Jika berhasil akan ada tulisan &quot;Success&quot; dan anda bisa
-                      menyalin link gambar tersebut
-                      <center>
-                        <div className="relative w-full h-80">
-                          <Image
-                            alt="Gambar"
-                            layout="fill"
-                            objectFit="contain"
-                            src="https://i.imgur.com/lndMtjB.jpeg"
-                          />
-                        </div>
-                      </center>
-                    </li>
-                  </ol>
-                </div>
+                <TutorialGambar></TutorialGambar>
               </div>
             </form>
           </div>

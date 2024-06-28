@@ -1,5 +1,6 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
+import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { authorizeUser, AuthorizedUser } from "../../../../utils/userAPI";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -9,33 +10,7 @@ export const authOptions: NextAuthOptions = {
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      authorize: async (credentials) => {
-        if (!credentials) {
-          return null;
-        }
-
-        const res = await fetch("https://bioaqualestari.hasura.app/api/rest/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-hasura-admin-secret": "uWyWA0nJbI0pnUA1jfwXlOUpLA5BYba1tb3sDtmTZg8uwRrtWG0gDxTPMn011TuH",
-          },
-        });
-
-        const data = await res.json();
-
-        // Periksa apakah ada pengguna dengan kredensial yang sesuai
-        const user = data.users.find((user: any) => user.username === credentials.username && user.password === credentials.password);
-
-        if (user) {
-          return {
-            id: user.id,
-            name: user.username,
-          };
-        } else {
-          return null;
-        }
-      },
+      authorize: authorizeUser,
     }),
   ],
   pages: {
@@ -45,11 +20,19 @@ export const authOptions: NextAuthOptions = {
     verifyRequest: "/auth/verify-request",
     newUser: undefined,
   },
+  session: {
+    maxAge: 60 * 60, // 1 hour
+    updateAge: 15 * 60, // 15 minutes
+  },
+  jwt: {
+    maxAge: 60 * 60, // 1 hour
+  },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
-        token.name = user.name ?? ''; // Menambahkan nilai default
+        const authorizedUser = user as AuthorizedUser;
+        token.id = authorizedUser.id;
+        token.name = authorizedUser.username;
       }
       return token;
     },
@@ -57,7 +40,7 @@ export const authOptions: NextAuthOptions = {
       if (token) {
         session.id = token.id;
         session.user = session.user || {};
-        session.user.name = token.name ?? ''; // Menambahkan nilai default
+        session.user.name = token.name ?? '';
       }
       return session;
     },

@@ -1,4 +1,3 @@
-// components/Sidebar.tsx
 import { useState, useEffect } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from 'next/link';
@@ -12,12 +11,6 @@ const Sidebar: React.FC = () => {
   const toggleMenu = () => {
     setOpen(!open);
   };
-
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      signIn();
-    }
-  }, [status]);
 
   const linkClass = (path: string) => 
     pathname === path
@@ -84,6 +77,9 @@ const Sidebar: React.FC = () => {
       </div>
     );
   }
+
+  // Jika status belum "authenticated" atau "unauthenticated"
+  return null;
 };
 
 export default Sidebar;

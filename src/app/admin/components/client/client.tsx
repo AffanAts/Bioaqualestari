@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { fetchClients, Client } from "../../../../utils/clientAPI"; // Sesuaikan path sesuai struktur proyek Anda
+import { fetchClients, Client } from "../../../../utils/clientAPI";
 import ModalClient from "./addClient";
 import ModalUpdateClient from "./updateClient";
 import { handleDeleteClient } from "./deleteClientHandler";
 import Image from "next/image";
-import Modal from "./imageModal"; // Import Modal
-
-type url = {
-  image: string;
-  name: string;
-};
+import Modal from "../../../../components/imageModal";
 
 const TableComponent: React.FC = () => {
   const [clients, setClients] = useState<Client[]>([]);
@@ -17,7 +12,7 @@ const TableComponent: React.FC = () => {
   const [clientsPerPage] = useState(10);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
-  const [selectedClient, setSelectedClient] = useState<Client | null>(null); // Tambahkan ini
+  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
 
   useEffect(() => {
     const getClients = async () => {
@@ -25,7 +20,7 @@ const TableComponent: React.FC = () => {
         const data = await fetchClients();
         setClients(data);
       } catch (error) {
-        console.error("Failed to fetch clients:", error);
+        console.error('Failed to fetch clients', error);
       }
     };
 
@@ -57,7 +52,7 @@ const TableComponent: React.FC = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedImageUrl(null);
-    setSelectedClient(null); // Tambahkan ini
+    setSelectedClient(null);
   };
 
   const placeholderImage =
