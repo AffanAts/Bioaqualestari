@@ -45,44 +45,42 @@ export default function BlogsPage() {
     }
   };
 
+  const truncateText = (text: string, limit: number): string => {
+    if (text.length <= limit) {
+      return text;
+    }
+    return text.slice(0, limit) + "...";
+  };
+
+  const stripPTags = (html: string): string => {
+    return html.replace(/<\/?p>/gi, "");
+  };
+
   return (
     <>
       <div className="text-black text-center py-12">
         <h1 className="font-extrabold text-4xl mb-8">Blog</h1>
-        <p className="mx-10">
+        <div className="mx-10">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi tempore illum atque hic rerum, necessitatibus asperiores quaerat nam mollitia itaque culpa similique error dolor! Incidunt consectetur deleniti recusandae ut et?
-        </p>
-      </div>
-      <div className="flex flex-wrap justify-around px-10">
-        <div className="w-full lg:w-7/12 mb-8">
-          {blogs.length > 0 && (
-            <Link href={`/blog/${blogs[0].id}`}>
-              <div>
-                <img className="w-full h-64 object-cover mb-4" src={isValidUrl(blogs[0].image) ? blogs[0].image : placeholderImage} alt={blogs[0].title} />
-                <p className="text-gray-500 mb-1">{new Date(blogs[0].created_at).toLocaleDateString()}</p>
-                <h2 className="text-3xl font-bold text-black mb-4">{blogs[0].title}</h2>
-                <p className="text-black">
-                  <div dangerouslySetInnerHTML={{ __html: blogs[0].description }} />
-                </p>
-              </div>
-            </Link>
-          )}
         </div>
-        <div className="w-full lg:w-4/12 flex flex-col space-y-6">
-          {blogs.slice(1).map((blog) => (
-            <Link href={`/blog/${blog.id}`} key={blog.id}>
-              <div className="flex space-x-4">
-                <img className="w-32 h-32 object-cover" src={isValidUrl(blog.image) ? blog.image : placeholderImage} alt={blog.title} />
-                <div>
-                  <p className="text-gray-500">{new Date(blog.created_at).toLocaleDateString()}</p>
-                  <h3 className="text-xl font-bold text-black">{blog.title}</h3>
+      </div>
+      <div className="flex flex-row flex-wrap gap-4 justify-center">
+        {blogs.map((blog) => (
+          <Link href={`/blog/${blog.id}`} key={blog.id}>
+            <div className="block w-64 h-96 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+              <img className="w-full h-40 object-cover" src={isValidUrl(blog.image) ? blog.image : placeholderImage} alt={blog.title} />
+              <div className="mt-4">
+                <div className="text-gray-500">{new Date(blog.created_at).toLocaleDateString()}</div>
+                <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{blog.title}</h5>
+                <div className="text-gray-400">
+                  {truncateText(stripPTags(blog.description), 30)}
                 </div>
               </div>
-            </Link>
-          ))}
-        </div>
+            </div>
+          </Link>
+        ))}
       </div>
-      {error && <p className="text-red-500 text-center">{error}</p>}
+      {error && <div className="text-red-500 text-center">{error}</div>}
     </>
   );
 }

@@ -1,5 +1,3 @@
-"use client"; // Ensure this is at the top
-
 import { insertComment } from "@/utils/commentAPI";
 import React, { useState } from "react";
 
@@ -56,6 +54,9 @@ export default function CommentSection({ blog, setBlog }: CommentSectionProps) {
       });
       setNewComment("");
       setNewName("");
+      
+      // Reload the page after successful comment insertion
+      window.location.reload();
     } catch (error) {
       console.error((error as Error).message);
     }
@@ -63,11 +64,11 @@ export default function CommentSection({ blog, setBlog }: CommentSectionProps) {
 
   return (
     <>
-      <div className="container p-4 text-black px-20">
+      <div className="container p-4 mx-auto max-w-screen-lg text-black">
         <h2 className="text-2xl font-bold mb-4">Comments</h2>
         {blog.comments.length > 0 ? (
           blog.comments.map((comment) => (
-            <div key={comment.id} className="block max-w p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mb-4">
+            <div key={comment.id} className="block max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mb-4">
               <div className="flex items-center mb-2">
                 <img src="https://i.pinimg.com/236x/57/2d/6b/572d6b5e842f4e2fd514f8fd5c32e779.jpg" className="rounded-full w-12 h-12 mr-3" alt="" />
                 <div>
@@ -75,7 +76,7 @@ export default function CommentSection({ blog, setBlog }: CommentSectionProps) {
                   <p className="text-gray-600 dark:text-gray-400 text-sm">{new Date(comment.created_at).toLocaleString()}</p>
                 </div>
               </div>
-              <p className="font-normal text-gray-700 dark:text-gray-400 pt-5">{comment.comment}</p>
+              <p className="font-normal text-gray-700 dark:text-gray-400 pt-5 break-words">{comment.comment}</p>
             </div>
           ))
         ) : (
