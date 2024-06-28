@@ -1,7 +1,12 @@
 // ModalUpdateProject.tsx
 import { useState } from "react";
 import { handleUpdate } from "./updateProjectHandler";
-import Image from "next/image";import TutorialGambar from "../../../../components/tutorialImage";
+import TutorialGambar from "../../../../components/tutorialImage";
+import Image from "next/image";
+import {
+  placeholderImage,
+  isValidUrl,
+} from "../../../../components/invalidImage";
 
 interface Project {
   id: number;
@@ -62,7 +67,14 @@ const ModalUpdateProject: React.FC<ModalUpdateProjectProps> = ({
             <form
               className="p-4 md:p-5"
               onSubmit={(e) =>
-                handleUpdate(e, project.id, title, imageUrl, description, onClose)
+                handleUpdate(
+                  e,
+                  project.id,
+                  title,
+                  imageUrl,
+                  description,
+                  onClose
+                )
               }
             >
               <div className="grid gap-4 mb-4 grid-cols-1 md:grid-cols-2">
@@ -102,9 +114,15 @@ const ModalUpdateProject: React.FC<ModalUpdateProjectProps> = ({
                     />
                   </div>
                   {imageUrl && (
-                    <div className="col-span-2">
-                      <img src={imageUrl} alt="Selected" className="rounded-lg" />
-                    </div>
+                    <div className="relative mt-3 h-36">
+                    <Image
+                      src={isValidUrl(imageUrl) ? imageUrl : placeholderImage}
+                      alt="Selected"
+                      className="rounded-lg"
+                      layout="fill"
+                      objectFit="contain"
+                    />
+                  </div>
                   )}
                   <div className="col-span-2">
                     <label

@@ -2,12 +2,12 @@ import React, { useState, ChangeEvent } from "react";
 import { handleSubmit } from "./addBlogHandler";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
+import TutorialGambar from "../../../../components/tutorialImage";
 import Image from "next/image";
 import {
   placeholderImage,
   isValidUrl,
 } from "../../../../components/invalidImage";
-import TutorialGambar from "../../../../components/tutorialImage";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 

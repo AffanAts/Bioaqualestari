@@ -1,11 +1,15 @@
 import React, { useState, ChangeEvent } from "react";
 import { handleUpdate } from "./updateBlogHandler";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css"; // Import the styles
-import Image from "next/image";
 import TutorialGambar from "../../../../components/tutorialImage";
+import Image from "next/image";
+import {
+  placeholderImage,
+  isValidUrl,
+} from "../../../../components/invalidImage";
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 interface Blog {
   id: number;
@@ -65,7 +69,15 @@ const ModalUpdateBlog: React.FC<ModalUpdateBlogProps> = ({ blog, onClose }) => {
             <form
               className="p-4 md:p-5"
               onSubmit={(e) =>
-                handleUpdate(e, blog.id, title, image, description, author, onClose)
+                handleUpdate(
+                  e,
+                  blog.id,
+                  title,
+                  image,
+                  description,
+                  author,
+                  onClose
+                )
               }
             >
               <div className="grid gap-4 mb-4 grid-cols-1 md:grid-cols-2">
@@ -105,8 +117,14 @@ const ModalUpdateBlog: React.FC<ModalUpdateBlogProps> = ({ blog, onClose }) => {
                     />
                   </div>
                   {image && (
-                    <div className="col-span-2">
-                      <img src={image} alt="Selected" className="rounded-lg" />
+                    <div className="relative mt-3 h-36">
+                      <Image
+                        src={isValidUrl(image) ? image : placeholderImage}
+                        alt="Selected"
+                        className="rounded-lg"
+                        layout="fill"
+                        objectFit="contain"
+                      />
                     </div>
                   )}
                   <div className="col-span-2">
@@ -154,7 +172,7 @@ const ModalUpdateBlog: React.FC<ModalUpdateBlogProps> = ({ blog, onClose }) => {
                     Update blog
                   </button>
                 </div>
-               <TutorialGambar></TutorialGambar>
+                <TutorialGambar></TutorialGambar>
               </div>
             </form>
           </div>

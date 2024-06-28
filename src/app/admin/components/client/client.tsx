@@ -4,7 +4,7 @@ import ModalClient from "./addClient";
 import ModalUpdateClient from "./updateClient";
 import { handleDeleteClient } from "./deleteClientHandler";
 import Image from "next/image";
-import Modal from "./imageModal";
+import Modal from "../../../../components/imageModal";
 
 const TableComponent: React.FC = () => {
   const [clients, setClients] = useState<Client[]>([]);

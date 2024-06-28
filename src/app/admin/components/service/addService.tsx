@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { handleSubmit } from "./addServiceHandler";
-import Image from "next/image";
 import TutorialGambar from "../../../../components/tutorialImage";
+import Image from "next/image";
+import {
+  placeholderImage,
+  isValidUrl,
+} from "../../../../components/invalidImage";
 
 const ModalService = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -117,11 +121,15 @@ const ModalService = () => {
                       />
                     </div>
                     {imageUrl && (
-                      <div className="col-span-2">
-                        <img
-                          src={imageUrl}
+                      <div className="relative mt-3 h-36">
+                        <Image
+                          src={
+                            isValidUrl(imageUrl) ? imageUrl : placeholderImage
+                          }
                           alt="Selected"
                           className="rounded-lg"
+                          layout="fill"
+                          objectFit="contain"
                         />
                       </div>
                     )}

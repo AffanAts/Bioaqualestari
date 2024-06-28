@@ -5,7 +5,7 @@ import ModalUpdateBlog from "./updateBlog";
 import { handleDeleteBlog } from "./deleteBlogHandler";
 import ModalComments from "./comment/commentBlog"; 
 import Image from "next/image";
-import Modal from "./imageModal";
+import Modal from "../../../../components/imageModal";
 
 const BlogComponent: React.FC = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);

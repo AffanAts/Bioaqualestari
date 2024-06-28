@@ -1,8 +1,12 @@
 // addProject.tsx
 import { useState, ChangeEvent } from "react";
 import { handleSubmit } from "./addProjectHandler";
-import Image from "next/image";import TutorialGambar from "../../../../components/tutorialImage";
-
+import TutorialGambar from "../../../../components/tutorialImage";
+import Image from "next/image";
+import {
+  placeholderImage,
+  isValidUrl,
+} from "../../../../components/invalidImage";
 const ModalProject = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>("");
@@ -59,7 +63,9 @@ const ModalProject = () => {
               </div>
               <form
                 className="p-4 md:p-5"
-                onSubmit={(e) => handleSubmit(e, title, imageUrl, description, toggleModal)}
+                onSubmit={(e) =>
+                  handleSubmit(e, title, imageUrl, description, toggleModal)
+                }
               >
                 <div className="grid gap-4 mb-4 grid-cols-1 md:grid-cols-2">
                   <div>
@@ -98,13 +104,15 @@ const ModalProject = () => {
                       />
                     </div>
                     {imageUrl && (
-                      <div className="col-span-2">
-                        <img
-                          src={imageUrl}
-                          alt="Selected"
-                          className="rounded-lg"
-                        />
-                      </div>
+                      <div className="relative mt-3 h-36">
+                      <Image
+                        src={isValidUrl(imageUrl) ? imageUrl : placeholderImage}
+                        alt="Selected"
+                        className="rounded-lg"
+                        layout="fill"
+                        objectFit="contain"
+                      />
+                    </div>
                     )}
                     <div className="col-span-2">
                       <label

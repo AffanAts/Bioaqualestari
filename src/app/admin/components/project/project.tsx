@@ -4,7 +4,7 @@ import ModalProject from "./addProject";
 import ModalUpdateProject from "./updateProject";
 import { handleDeleteProject } from "./deleteProjectHandler";
 import Image from "next/image";
-import Modal from "./imageModal";
+import Modal from "../../../../components/imageModal";
 
 const ReadMore: React.FC<{ text: string }> = ({ text }) => {
   const [isReadMore, setIsReadMore] = useState(true);

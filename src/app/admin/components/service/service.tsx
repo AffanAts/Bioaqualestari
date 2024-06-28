@@ -4,7 +4,7 @@ import ModalService from "./addService";
 import ModalUpdateService from "./updateService";
 import { handleDeleteService } from "./deleteServiceHandler";
 import Image from "next/image";
-import Modal from "./imageModal"; // Import Modal
+import Modal from "../../../../components/imageModal"; // Import Modal
 
 type url = {
   image: string;

@@ -1,7 +1,11 @@
 import { useState, ChangeEvent } from "react";
 import { handleSubmit } from "./addClientHandler";
-import Image from "next/image";
 import TutorialGambar from "../../../../components/tutorialImage";
+import Image from "next/image";
+import {
+  placeholderImage,
+  isValidUrl,
+} from "../../../../components/invalidImage";
 
 const ModalClient = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -97,13 +101,15 @@ const ModalClient = () => {
                       />
                     </div>
                     {imageUrl && (
-                      <div className="col-span-2">
-                        <img
-                          src={imageUrl}
-                          alt="Selected"
-                          className="rounded-lg"
-                        />
-                      </div>
+                      <div className="relative mt-3 h-36">
+                      <Image
+                        src={isValidUrl(imageUrl) ? imageUrl : placeholderImage}
+                        alt="Selected"
+                        className="rounded-lg"
+                        layout="fill"
+                        objectFit="contain"
+                      />
+                    </div>
                     )}
                     <button
                       type="submit"
