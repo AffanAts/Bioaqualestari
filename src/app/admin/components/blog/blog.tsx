@@ -5,13 +5,12 @@ import ModalUpdateBlog from "./updateBlog";
 import { handleDeleteBlog } from "./deleteBlogHandler";
 import ModalComments from "./comment/commentBlog"; 
 import Image from "next/image";
-import Modal from "./imageModal"; 
+import Modal from "./imageModal";
 
 const BlogComponent: React.FC = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [blogsPerPage] = useState(10);
-  const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
   const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
@@ -22,23 +21,13 @@ const BlogComponent: React.FC = () => {
       try {
         const data = await fetchBlogs();
         setBlogs(data);
-        setIsLoading(false);
       } catch (error) {
-        console.error("Failed to fetch blogs:", error);
-        setIsLoading(false);
+        console.error('Failed to fetch blogs', error);
       }
     };
 
     getBlogs();
   }, []);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!blogs || blogs.length === 0) {
-    return <div>No blogs available</div>;
-  }
 
   // Pagination logic
   const indexOfLastBlog = currentPage * blogsPerPage;
@@ -86,6 +75,28 @@ const BlogComponent: React.FC = () => {
     }
   };
 
+  const DescriptionWithReadMore = ({ description }: { description: string }) => {
+    const [isReadMore, setIsReadMore] = useState(true);
+
+    const toggleReadMore = () => {
+      setIsReadMore(!isReadMore);
+    };
+
+    return (
+      <div>
+        <div dangerouslySetInnerHTML={{ __html: isReadMore ? description.slice(0, 100) + '...' : description }} />
+        {description.length > 100 && (
+          <span
+            onClick={toggleReadMore}
+            className="text-blue-600 hover:underline cursor-pointer"
+          >
+            {isReadMore ? "Read more" : "Show less"}
+          </span>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Blog Control</h1>
@@ -122,8 +133,8 @@ const BlogComponent: React.FC = () => {
                 <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">
                   <b style={{ fontSize: "25px" }}>{blog.title}</b>
                 </td>
-                <td className="px-6 py-4 font-medium text-black  dark:text-white max-w-xl">
-                  <div dangerouslySetInnerHTML={{ __html: blog.description }} />
+                <td className="px-6 py-4 font-medium text-black dark:text-white max-w-xl">
+                  <DescriptionWithReadMore description={blog.description} />
                 </td>
                 <td className="py-4">
                   <div className="relative w-auto h-20">

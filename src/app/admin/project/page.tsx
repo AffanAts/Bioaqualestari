@@ -1,21 +1,37 @@
-// pages/index.tsx
-
 "use client";
 
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from 'next/navigation';
 import Sidebar from "../components/sidebar";
-import Client from "../components/project/project";
+import Project from "../components/project/project";
 
-const Dashboard = () => {
-  {
+const ProjectPage = () => {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push('/api/auth/signin');
+    }
+  }, [status, router]);
+
+  if (status === "loading") {
+    return null;
+  }
+
+  if (status === "authenticated") {
     return (
       <div className="flex flex-col md:flex-row">
         <Sidebar />
         <div className="p-4 flex-grow">
-          {/* Konten halaman Anda */}
-          <Client></Client>
+          <Project />
         </div>
       </div>
     );
   }
+
+  return null;
 };
-export default Dashboard;
+
+export default ProjectPage;

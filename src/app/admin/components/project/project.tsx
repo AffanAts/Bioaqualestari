@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { fetchProjects, Project } from "../../../../utils/projectAPI"; // Sesuaikan path sesuai struktur proyek Anda
+import { fetchProjects, Project } from "../../../../utils/projectAPI";
 import ModalProject from "./addProject";
 import ModalUpdateProject from "./updateProject";
 import { handleDeleteProject } from "./deleteProjectHandler";
 import Image from "next/image";
-import Modal from "./imageModal"; // Import Modal
+import Modal from "./imageModal";
 
 const ReadMore: React.FC<{ text: string }> = ({ text }) => {
   const [isReadMore, setIsReadMore] = useState(true);
@@ -39,7 +39,7 @@ const TableComponent: React.FC = () => {
         const data = await fetchProjects();
         setProjects(data);
       } catch (error) {
-        console.error("Failed to fetch projects:", error);
+        console.error('Failed to fetch projects', error);
       }
     };
 
@@ -49,10 +49,7 @@ const TableComponent: React.FC = () => {
   // Pagination logic
   const indexOfLastProject = currentPage * projectsPerPage;
   const indexOfFirstProject = indexOfLastProject - projectsPerPage;
-  const currentProjects = projects.slice(
-    indexOfFirstProject,
-    indexOfLastProject
-  );
+  const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -218,11 +215,7 @@ const TableComponent: React.FC = () => {
         <ModalUpdateProject project={selectedProject} onClose={closeModal} />
       )}
       {isModalOpen && selectedImageUrl && (
-        <Modal
-          isOpen={isModalOpen}
-          onClose={closeModal}
-          imageUrl={selectedImageUrl}
-        />
+        <Modal isOpen={isModalOpen} onClose={closeModal} imageUrl={selectedImageUrl} />
       )}
     </div>
   );

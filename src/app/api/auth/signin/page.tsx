@@ -28,25 +28,29 @@ export default function SignIn() {
     e.preventDefault();
     setIsLoading(true);
 
-    const result = await signIn("credentials", {
-      redirect: false,
-      username,
-      password,
-    });
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        username,
+        password,
+      });
 
-    setIsLoading(false);
-
-    if (result?.error) {
-      setError("Invalid username or password");
-    } else {
-      router.push("/admin/dashboard");
+      if (result?.error) {
+        setError("Invalid username or password");
+      } else {
+        router.push("/admin/dashboard");
+      }
+    } catch (error) {
+      setError("Something went wrong, please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div>
       <section className="bg-white">
-        <Header></Header>
+        <Header />
         <div className="flex flex-col items-center justify-center px-6 mx-auto md:pt-24">
           <div className="mt-12 md:mt-0">
             <a
@@ -70,7 +74,7 @@ export default function SignIn() {
               <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                 <div>
                   <label
-                    htmlFor="email"
+                    htmlFor="username"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Your Username
