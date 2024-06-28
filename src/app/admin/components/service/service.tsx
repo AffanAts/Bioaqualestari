@@ -103,10 +103,10 @@ const TableComponent: React.FC = () => {
                 key={service.id}
                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
               >
-                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">
                   <b style={{fontSize:"25px"}}>{service.name}</b>
                 </td>
-                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">
                   {service.description}
                 </td>
                 <td className=" py-4">

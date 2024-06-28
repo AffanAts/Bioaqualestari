@@ -1,5 +1,5 @@
 import { deleteComment } from "../../../../../utils/commentAPI";
-import { Blog, Comment } from "../../../../../utils/blogAPI";
+import { Blog } from "../../../../../utils/blogAPI";
 import Swal from "sweetalert2";
 
 export const handleDeleteComment = async (

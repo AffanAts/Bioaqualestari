@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { fetchBlogs, Blog } from "../../../../utils/blogAPI"; // Sesuaikan path sesuai struktur proyek Anda
+import { fetchBlogs, Blog } from "../../../../utils/blogAPI"; 
 import ModalBlog from "./addBlog";
 import ModalUpdateBlog from "./updateBlog";
 import { handleDeleteBlog } from "./deleteBlogHandler";
-import ModalComments from "./comment/commentBlog"; // Import ModalComments
+import ModalComments from "./comment/commentBlog"; 
 import Image from "next/image";
-import Modal from "./imageModal"; // Import Modal
+import Modal from "./imageModal"; 
 
 const BlogComponent: React.FC = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -15,7 +15,7 @@ const BlogComponent: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
   const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
-  const [selectedBlogId, setSelectedBlogId] = useState<number | null>(null); // Tambahkan state untuk blogId
+  const [selectedBlogId, setSelectedBlogId] = useState<number | null>(null);
 
   useEffect(() => {
     const getBlogs = async () => {
@@ -119,10 +119,10 @@ const BlogComponent: React.FC = () => {
                 key={blog.id}
                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
               >
-                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">
                   <b style={{ fontSize: "25px" }}>{blog.title}</b>
                 </td>
-                <td className="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-white">
+                <td className="px-6 py-4 font-medium text-black  dark:text-white max-w-xl">
                   <div dangerouslySetInnerHTML={{ __html: blog.description }} />
                 </td>
                 <td className="py-4">
