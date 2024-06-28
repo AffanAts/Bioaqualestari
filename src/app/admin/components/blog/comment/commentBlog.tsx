@@ -81,7 +81,7 @@ const ModalComments: React.FC<ModalCommentsProps> = ({ blogId, onClose }) => {
               <div className="mb-4">
                 {blog?.comments && blog.comments.length > 0 ? (
                   blog.comments.map((comment) => (
-                    <div key={comment.id} className="mb-4">
+                    <div key={comment.id} className="mb-4 w-auto p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                       <p className="text-gray-600 mb-1"><strong>{comment.name}</strong> on {new Date(comment.created_at).toLocaleString()}</p>
                       <p>{comment.comment}</p>
                       <button
