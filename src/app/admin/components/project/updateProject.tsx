@@ -1,5 +1,5 @@
 // ModalUpdateProject.tsx
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { handleUpdate } from "./updateProjectHandler";
 import TutorialGambar from "../../../../components/tutorialImage";
 import Image from "next/image";
@@ -27,6 +27,16 @@ const ModalUpdateProject: React.FC<ModalUpdateProjectProps> = ({
   const [imageUrl, setImageUrl] = useState<string>(project.image);
   const [title, setTitle] = useState<string>(project.title);
   const [description, setDescription] = useState<string>(project.description);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Check if description length exceeds 400 characters
+    if (description.length > 370) {
+      alert("Description should not exceed 400 characters.");
+      return;
+    }
+    handleUpdate(e, project.id, title, imageUrl, description, onClose);
+  };
 
   return (
     <div>
@@ -66,16 +76,7 @@ const ModalUpdateProject: React.FC<ModalUpdateProjectProps> = ({
             </div>
             <form
               className="p-4 md:p-5"
-              onSubmit={(e) =>
-                handleUpdate(
-                  e,
-                  project.id,
-                  title,
-                  imageUrl,
-                  description,
-                  onClose
-                )
-              }
+              onSubmit={handleSubmit}
             >
               <div className="grid gap-4 mb-4 grid-cols-1 md:grid-cols-2">
                 <div>
@@ -115,14 +116,14 @@ const ModalUpdateProject: React.FC<ModalUpdateProjectProps> = ({
                   </div>
                   {imageUrl && (
                     <div className="relative mt-3 h-36">
-                    <Image
-                      src={isValidUrl(imageUrl) ? imageUrl : placeholderImage}
-                      alt="Selected"
-                      className="rounded-lg"
-                      layout="fill"
-                      objectFit="contain"
-                    />
-                  </div>
+                      <Image
+                        src={isValidUrl(imageUrl) ? imageUrl : placeholderImage}
+                        alt="Selected"
+                        className="rounded-lg"
+                        layout="fill"
+                        objectFit="contain"
+                      />
+                    </div>
                   )}
                   <div className="col-span-2">
                     <label
@@ -138,6 +139,7 @@ const ModalUpdateProject: React.FC<ModalUpdateProjectProps> = ({
                       placeholder="Type project description"
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
+                      maxLength={370}
                     />
                   </div>
                   <button
@@ -159,7 +161,7 @@ const ModalUpdateProject: React.FC<ModalUpdateProjectProps> = ({
                     Update project
                   </button>
                 </div>
-                <TutorialGambar></TutorialGambar>
+                <TutorialGambar />
               </div>
             </form>
           </div>

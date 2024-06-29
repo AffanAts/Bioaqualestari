@@ -55,45 +55,48 @@ const ProjectsPage: React.FC = () => {
 
   return (
     <>
-      <div className="text-black text-center">
-        <h1 className="font-extrabold text-4xl mb-8">Our Project</h1>
-        <p className="mx-10">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi tempore
-          illum atque hic rerum, necessitatibus asperiores quaerat nam mollitia
-          itaque culpa similique error dolor! Incidunt consectetur deleniti
-          recusandae ut et?
-        </p>
-      </div>
-      {error && <div className="text-red-500">{error}</div>}
-      {projects.slice(0, 3).map((project, index) => (
-        <div
-          key={project.id}
-          className={`mx-20 flex flex-col md:flex-row gap-8 py-10 ${
-            index % 2 !== 0 ? "md:flex-row-reverse" : ""
-          }`}
-        >
-          <img
-            src={isValidUrl(project.image) ? project.image : placeholderImage}
-            alt={project.title}
-            className="rounded-lg w-full md:w-1/2 object-cover"
-            style={{ height: "300px" }}
-          />
-          <div className="text-black w-full md:w-1/2">
-            <p className="text-xl my-3 font-semibold">Our Portfolio</p>
-            <p className="text-5xl mt-5 font-bold">{project.title}</p>
-            <p className="text-xl mt-5">{project.description}</p>
-          </div>
+      <div className="text-white bg-zinc-900">
+        <div className="text-center">
+          <h1 className="font-extrabold text-4xl mb-3">Our Project</h1>
+          <p className="mx-auto max-w-5xl">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi
+            tempore illum atque hic rerum, necessitatibus asperiores quaerat nam
+            mollitia itaque culpa similique error dolor! Incidunt consectetur
+            deleniti recusandae ut et?
+          </p>
         </div>
-      ))}
-      <div className="flex justify-center mt-8">
-        <button
-          onClick={openDialog}
-          className="select-none rounded-lg bg-gradient-to-tr from-gray-900 to-gray-800 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md transition-all hover:shadow-lg active:opacity-[0.85]"
-        >
-          View More
-        </button>
+
+        {error && <div className="text-red-500">{error}</div>}
+        {projects.slice(0, 3).map((project, index) => (
+          <div
+            key={project.id}
+            className={`mx-auto flex flex-col md:flex-row gap-8 py-10 max-w-7xl mt-5 ${
+              index % 2 !== 0 ? "md:flex-row-reverse" : ""
+            }`}
+          >
+            <img
+              src={isValidUrl(project.image) ? project.image : placeholderImage}
+              alt={project.title}
+              className="rounded-lg w-full md:w-1/2 object-cover"
+              style={{ height: "300px" }}
+            />
+            <div className="w-full md:w-1/2 px-4 md:px-10">
+              <p className="text-sm font-semibold">OUR PORTOFOLIO</p>
+              <p className="text-3xl mt-3 font-bold">{project.title}</p>
+              <p className="text-lg mt-5">{project.description}</p>
+            </div>
+          </div>
+        ))}
+        <div className="flex justify-center mb-8">
+          <button
+            onClick={openDialog}
+            className="select-none rounded-full bg-sky-500 from-gray-900 to-gray-800 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md transition-all hover:bg-sky-700 active:opacity-[0.85]"
+          >
+            View More
+          </button>
+        </div>
+        <DialogXXL isOpen={isDialogOpen} onClose={closeDialog} />
       </div>
-      <DialogXXL isOpen={isDialogOpen} onClose={closeDialog} />
     </>
   );
 };

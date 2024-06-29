@@ -14,7 +14,7 @@ const DialogXXL: React.FC<DialogProps> = ({ isOpen, onClose }) => {
     >
       <div className="relative w-screen h-screen min-w-full max-w-full bg-white font-sans text-base font-light leading-relaxed text-blue-gray-500 antialiased">
         <div className="flex items-center p-4 font-sans text-2xl antialiased font-semibold leading-snug text-blue-gray-900">
-          It's a simple dialog.
+          Its a simple dialog.
         </div>
         <div className="relative p-4 font-sans text-base antialiased font-light leading-relaxed border-t border-b border-t-blue-gray-100 border-b-blue-gray-100 text-blue-gray-500">
           The key to more success is to have a lot of pillows. Put it this way, it took me twenty five years to get these plants, twenty five years of blood sweat and tears, and I&apos;m never giving up, I&apos;m just getting started. I&apos;m up to something. Fan luv.

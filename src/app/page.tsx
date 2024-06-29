@@ -6,10 +6,11 @@ export default function Home() {
   return (
     <>
       <Header></Header>
+      <div className="">
       <LandingPage></LandingPage>
-      <div className="bg-white">
+    
         <AboutUs></AboutUs>
-      </div>
+      
       <div className="py-10 bg-white  ">
         <Services></Services>
       </div>
@@ -20,7 +21,7 @@ export default function Home() {
       <Client></Client>
       <Blogs></Blogs>
       <Footer></Footer>
-      <div></div>
+      </div>
     </>
   );
 }

@@ -128,6 +128,7 @@ const ModalProject = () => {
                         placeholder="Type project description"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                        maxLength={370}
                       />
                     </div>
                     <button

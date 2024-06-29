@@ -71,7 +71,7 @@ export default function BlogsPage() {
               <img className="w-full h-40 object-cover" src={isValidUrl(blog.image) ? blog.image : placeholderImage} alt={blog.title} />
               <div className="mt-4">
                 <div className="text-gray-500">{new Date(blog.created_at).toLocaleDateString()}</div>
-                <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{blog.title}</h5>
+                <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-black">{blog.title}</h5>
                 <div className="text-gray-400">
                   {truncateText(stripPTags(blog.description), 30)}
                 </div>
