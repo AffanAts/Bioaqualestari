@@ -86,7 +86,7 @@ export default function Header() {
               width={200}
               height={200}
               className="h-8 w-auto"
-              src="https://i.ibb.co.com/sRF40bm/Whats-App-Image-2024-06-12-at-23-23-02-0a5ceb83.jpg"
+              src="https://i.imgur.com/5bqo1uC.png"
               alt=""
             />
           </a>
@@ -197,7 +197,7 @@ export default function Header() {
                 width={200}
                 height={200}
                 className="h-8 w-auto"
-                src="https://i.ibb.co.com/sRF40bm/Whats-App-Image-2024-06-12-at-23-23-02-0a5ceb83.jpg"
+                src="https://i.imgur.com/5bqo1uC.png"
                 alt=""
               />
             </a>

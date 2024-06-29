@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useState } from "react";
+import { useSession, signOut } from "next-auth/react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Sidebar: React.FC = () => {
   const { data: session, status } = useSession();
@@ -12,7 +12,7 @@ const Sidebar: React.FC = () => {
     setOpen(!open);
   };
 
-  const linkClass = (path: string) => 
+  const linkClass = (path: string) =>
     pathname === path
       ? "block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-gray-200 rounded-lg dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
       : "block px-4 py-2 mt-2 text-sm font-semibold text-gray-900 bg-transparent rounded-lg dark:bg-transparent dark:hover:bg-gray-600 dark:focus:bg-gray-600 dark:focus:text-white dark:hover:text-white dark:text-gray-200 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline";
@@ -21,12 +21,9 @@ const Sidebar: React.FC = () => {
     return (
       <div className="md:flex flex-col w-full md:w-64 text-gray-700 bg-white dark:text-gray-200 dark:bg-gray-800 flex-shrink-0">
         <div className="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
-          <a
-            href="#"
-            className="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline"
-          >
+          <p className="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">
             Bioaqualestari
-          </a>
+          </p>
           <button
             className="rounded-lg md:hidden focus:outline-none focus:shadow-outline"
             onClick={toggleMenu}
@@ -49,7 +46,10 @@ const Sidebar: React.FC = () => {
           </button>
         </div>
         <nav className={`md:block ${open ? "block" : "hidden"}`}>
-          <Link className={linkClass("/admin/dashboard")} href="/admin/dashboard">
+          <Link
+            className={linkClass("/admin/dashboard")}
+            href="/admin/dashboard"
+          >
             Dashboard
           </Link>
           <Link className={linkClass("/")} href="/">

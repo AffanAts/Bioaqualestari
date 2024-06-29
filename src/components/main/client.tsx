@@ -77,15 +77,6 @@ const ClientsPage: React.FC = () => {
                         <div className="rounded-full overflow-hidden w-20 h-20 mx-auto mt-4">
                           <img className="object-cover w-full h-full" src={isValidUrl(client.image) ? client.image : placeholderImage} alt={client.name} />
                         </div>
-                        {/* Example with Next.js Image component (uncomment if needed) */}
-                        {/* <div className="rounded-full overflow-hidden w-20 h-20 mx-auto mt-4">
-                          <Image
-                            src={isValidUrl(client.image) ? client.image : placeholderImage}
-                            alt={client.name}
-                            layout="fill"
-                            objectFit="contain"
-                          />
-                        </div> */}
                         <div className="text-center">
                           <p className="text-black text-sm font-semibold">{client.name}</p>
                         </div>

@@ -1,10 +1,9 @@
-// ProjectsPage.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
 import { fetchProjects } from "../../utils/projectAPI";
+import DialogXXL from "./ourProjectModal";
 import Image from "next/image";
-// import Modal from "./ModalProject";
 
 interface Project {
   id: number;
@@ -12,7 +11,8 @@ interface Project {
   image: string;
   description: string;
 }
-const placeholderImage = "https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg"; // URL gambar placeholder
+const placeholderImage =
+  "https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg"; // URL gambar placeholder
 
 const isValidUrl = (url: string): boolean => {
   try {
@@ -22,10 +22,11 @@ const isValidUrl = (url: string): boolean => {
     return false;
   }
 };
+
 const ProjectsPage: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [error, setError] = useState<string | null>(null);
-  // const [showModal, setShowModal] = useState<boolean>(false);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const getProjects = async () => {
@@ -44,23 +45,12 @@ const ProjectsPage: React.FC = () => {
     getProjects();
   }, []);
 
-  // const handleShowModal = () => {
-  //   setShowModal(true);
-  // };
+  const openDialog = () => {
+    setIsDialogOpen(true);
+  };
 
-  // const closeModal = () => {
-  //   setShowModal(false);
-  // };
-
-  const placeholderImage = "https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg"; // URL gambar placeholder
-
-  const isValidUrl = (url: string): boolean => {
-    try {
-      new URL(url);
-      return true;
-    } catch (e) {
-      return false;
-    }
+  const closeDialog = () => {
+    setIsDialogOpen(false);
   };
 
   return (
@@ -68,56 +58,42 @@ const ProjectsPage: React.FC = () => {
       <div className="text-black text-center">
         <h1 className="font-extrabold text-4xl mb-8">Our Project</h1>
         <p className="mx-10">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi tempore illum atque hic rerum, necessitatibus asperiores quaerat nam mollitia itaque culpa similique error dolor! Incidunt consectetur deleniti recusandae ut et?
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi tempore
+          illum atque hic rerum, necessitatibus asperiores quaerat nam mollitia
+          itaque culpa similique error dolor! Incidunt consectetur deleniti
+          recusandae ut et?
         </p>
       </div>
       {error && <div className="text-red-500">{error}</div>}
       {projects.slice(0, 3).map((project, index) => (
-        <div key={project.id} className={`mx-20 flex flex-col md:flex-row gap-8 py-10 ${index % 2 !== 0 ? "md:flex-row-reverse" : ""}`}>
-          <img src={isValidUrl(project.image) ? project.image : placeholderImage} alt={project.title} className="rounded-lg w-full md:w-1/2 object-cover" style={{ height: "300px" }} />
-          <div className="text-black m-10 w-full md:w-1/2">
-            <p className="text-xl font-semibold">Our Portfolio</p>
-            <p className="text-4xl font-bold">{project.title}</p>
-            <p>{project.description}</p>
+        <div
+          key={project.id}
+          className={`mx-20 flex flex-col md:flex-row gap-8 py-10 ${
+            index % 2 !== 0 ? "md:flex-row-reverse" : ""
+          }`}
+        >
+          <img
+            src={isValidUrl(project.image) ? project.image : placeholderImage}
+            alt={project.title}
+            className="rounded-lg w-full md:w-1/2 object-cover"
+            style={{ height: "300px" }}
+          />
+          <div className="text-black w-full md:w-1/2">
+            <p className="text-xl my-3 font-semibold">Our Portfolio</p>
+            <p className="text-5xl mt-5 font-bold">{project.title}</p>
+            <p className="text-xl mt-5">{project.description}</p>
           </div>
         </div>
       ))}
-      {/* {projects.length > 3 && (
-        <div className="text-center mt-8">
-          <button
-            onClick={handleShowModal}
-            className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700"
-          >
-            Show More Projects
-          </button>
-        </div>
-      )}
-      {showModal && (
-        <Modal onClose={closeModal}>
-          <div className="flex flex-col">
-            {projects.map((project, index) => (
-              <div
-                key={project.id}
-                className={` flex flex-col md:flex-row  ${
-                  index % 2 !== 0 ? "md:flex-row-reverse" : ""
-                }`}
-              >
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="rounded-lg w-full md:w-1/2 object-cover"
-                  style={{ height: "300px" }}
-                />
-                <div className="text-black m-10 w-full md:w-1/2">
-                  <p className="text-xl font-semibold">Our Portfolio</p>
-                  <p className="text-4xl font-bold">{project.title}</p>
-                  <p>{project.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Modal>
-      )} */}
+      <div className="flex justify-center mt-8">
+        <button
+          onClick={openDialog}
+          className="select-none rounded-lg bg-gradient-to-tr from-gray-900 to-gray-800 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md transition-all hover:shadow-lg active:opacity-[0.85]"
+        >
+          View More
+        </button>
+      </div>
+      <DialogXXL isOpen={isDialogOpen} onClose={closeDialog} />
     </>
   );
 };
