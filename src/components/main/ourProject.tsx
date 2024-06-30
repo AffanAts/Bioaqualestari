@@ -55,7 +55,7 @@ const ProjectsPage: React.FC = () => {
 
   return (
     <>
-      <div className="text-white bg-zinc-900">
+      <div className="">
         <div className="text-center">
           <h1 className="font-extrabold text-4xl mb-3">Our Project</h1>
           <p className="mx-auto max-w-5xl">
