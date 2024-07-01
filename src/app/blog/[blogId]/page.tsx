@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { fetchBlogById } from "../../../utils/blogAPI";
 import CommentSection from "./commentSection";
+import BlogsPage from "./relatedContents";
 
 interface Comment {
   id: number;
@@ -95,24 +96,7 @@ export default function BlogDetails({ params }: { params: { blogId: string } }) 
         <img className="w-full h-70 object-cover mb-4" src={blog.image} alt={blog.title} />
         <div className="text-lg" dangerouslySetInnerHTML={{ __html: blog.description }}></div>
       </div>
-      <div className="px-4 container p-4 mx-auto max-w-screen-lg">
-        <h1 className="text-black text-3xl font-bold container pb-4 mx-auto max-w-screen-lg">Related Contents</h1>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <a href="#" className="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-          <img className="w-full h-70 object-cover mb-4" src={blog.image} alt={blog.title} />
-            <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{blog.title}</h5>
-            <p className="font-normal text-gray-700 dark:text-gray-400">Created: {new Date(blog.created_at).toLocaleDateString()}</p>
-          </a>
-          <a href="#" className="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-            <p className="font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-          </a>
-          <a href="#" className="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-            <p className="font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
-          </a>
-        </div>
-      </div>
+      <BlogsPage />
       <CommentSection blog={blog} setBlog={setBlog} />
     </>
   );
